@@ -5,4 +5,8 @@ class Cliente {
 
   Cliente(this.nome, this.cpf);
 
+  @override
+  String toString() {
+    return 'Cliente{nome: $nome, cpf: $cpf}';
+  }
 }
