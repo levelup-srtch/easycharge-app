@@ -6,53 +6,50 @@ import 'package:provider/provider.dart';
 
 import 'models/listaClientes.dart';
 
-// void main() => runApp(ChangeNotifierProvider(
-//   child: EasychargeApp(),
-//   create: (context) => ListaDeClientes(),
-// ));
-//
-// class EasychargeApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: ListagemDeClientes(),
-//     );
-//   }
-// }
+void main() => runApp(ChangeNotifierProvider(
+  child: EasychargeApp(),
+  create: (context) => ListaDeClientes(),
+));
 
-import 'dart:math' as math;
-
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: Home(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
+class EasychargeApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyStatefulWidget(),
+    );
+  }
 }
 
-@immutable
-class Home extends StatelessWidget {
-  static const _actionTitles = ['listagemCliente', 'listagem divida'];
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
 
-  const Home({super.key});
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
 
-  void _showAction(BuildContext context, int index) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text(_actionTitles[index]),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('CLOSE'),
-            ),
-          ],
-        );
-      },
-    );
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Cliente',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Divida',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Cobrança',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -61,267 +58,32 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('EasyCharge'),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        itemCount: 25,
-        itemBuilder: (context, index) {
-          return FakeItem(isBig: index.isOdd);
-        },
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      floatingActionButton: ExpandableFab(
-        distance: 50.0,
-        children: [
-          ActionButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return FormularioDeCliente();
-              }));
-            },
-            icon: const Icon(Icons.person),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Cliente',
           ),
-          ActionButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return FormularioDeDivida();
-              }));
-            },
-            icon: const Icon(Icons.money),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.monetization_on),
+            label: 'Divida',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Cobrança',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
 }
 
-@immutable
-class ExpandableFab extends StatefulWidget {
-  const ExpandableFab({
-    super.key,
-    this.initialOpen,
-    required this.distance,
-    required this.children,
-  });
-
-  final bool? initialOpen;
-  final double distance;
-  final List<Widget> children;
-
-  @override
-  State<ExpandableFab> createState() => _ExpandableFabState();
-}
-
-class _ExpandableFabState extends State<ExpandableFab>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _expandAnimation;
-  bool _open = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _open = widget.initialOpen ?? false;
-    _controller = AnimationController(
-      value: _open ? 1.0 : 0.0,
-      duration: const Duration(milliseconds: 250),
-      vsync: this,
-    );
-    _expandAnimation = CurvedAnimation(
-      curve: Curves.fastOutSlowIn,
-      reverseCurve: Curves.easeOutQuad,
-      parent: _controller,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _toggle() {
-    setState(() {
-      _open = !_open;
-      if (_open) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        clipBehavior: Clip.none,
-        children: [
-          _buildTapToCloseFab(),
-          ..._buildExpandingActionButtons(),
-          _buildTapToOpenFab(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTapToCloseFab() {
-    return SizedBox(
-      width: 56.0,
-      height: 56.0,
-      child: Center(
-        child: Material(
-          shape: const CircleBorder(),
-          clipBehavior: Clip.antiAlias,
-          elevation: 4.0,
-          child: InkWell(
-            onTap: _toggle,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.close,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _buildExpandingActionButtons() {
-    final children = <Widget>[];
-    final count = widget.children.length;
-    final step = 90.0 / (count - 1);
-    for (var i = 0, angleInDegrees = 0.0;
-    i < count;
-    i++, angleInDegrees += step) {
-      children.add(
-        _ExpandingActionButton(
-          directionInDegrees: angleInDegrees,
-          maxDistance: widget.distance,
-          progress: _expandAnimation,
-          child: widget.children[i],
-        ),
-      );
-    }
-    return children;
-  }
-
-  Widget _buildTapToOpenFab() {
-    return IgnorePointer(
-      ignoring: _open,
-      child: AnimatedContainer(
-        transformAlignment: Alignment.center,
-        transform: Matrix4.diagonal3Values(
-          _open ? 0.7 : 1.0,
-          _open ? 0.7 : 1.0,
-          1.0,
-        ),
-        duration: const Duration(milliseconds: 250),
-        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
-        child: AnimatedOpacity(
-          opacity: _open ? 0.0 : 1.0,
-          curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
-          duration: const Duration(milliseconds: 250),
-          child: FloatingActionButton(
-            onPressed: _toggle,
-            child: const Icon(Icons.create),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-@immutable
-class _ExpandingActionButton extends StatelessWidget {
-  const _ExpandingActionButton({
-    required this.directionInDegrees,
-    required this.maxDistance,
-    required this.progress,
-    required this.child,
-  });
-
-  final double directionInDegrees;
-  final double maxDistance;
-  final Animation<double> progress;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: progress,
-      builder: (context, child) {
-        final offset = Offset.fromDirection(
-          directionInDegrees * (math.pi / 180.0),
-          progress.value * maxDistance,
-        );
-        return Positioned(
-          right: 4.0 + offset.dx,
-          bottom: 4.0 + offset.dy,
-          child: Transform.rotate(
-            angle: (1.0 - progress.value) * math.pi / 2,
-            child: child!,
-          ),
-        );
-      },
-      child: FadeTransition(
-        opacity: progress,
-        child: child,
-      ),
-    );
-  }
-}
-
-@immutable
-class ActionButton extends StatelessWidget {
-  const ActionButton({
-    super.key,
-    this.onPressed,
-    required this.icon,
-  });
-
-  final VoidCallback? onPressed;
-  final Widget icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Material(
-      shape: const CircleBorder(),
-      clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
-      elevation: 4.0,
-      child: IconButton(
-        onPressed: onPressed,
-        icon: icon,
-        color: theme.colorScheme.onSecondary,
-      ),
-    );
-  }
-}
-
-@immutable
-class FakeItem extends StatelessWidget {
-  const FakeItem({
-    super.key,
-    required this.isBig,
-  });
-
-  final bool isBig;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-      height: isBig ? 128.0 : 36.0,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-        color: Colors.grey.shade300,
-      ),
-    );
-  }
-}
 
 
 
