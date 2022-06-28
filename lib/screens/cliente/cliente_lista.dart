@@ -36,6 +36,7 @@ class ListaDeClientes extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        backgroundColor: Colors.black54,
         child: const Icon(Icons.add),
       ),
     );

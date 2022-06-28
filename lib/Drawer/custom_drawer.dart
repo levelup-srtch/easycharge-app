@@ -66,13 +66,11 @@ class CustomDrawer extends StatelessWidget {
                  DrawerTitle(
                   icon: Icons.person_outline_outlined,
                   text: 'Clientes',
-                  sair: false,
                   page: ListaDeClientes(),
                 ) ,
                 DrawerTitle(
                   icon: Icons.account_balance_outlined,
                   text: 'Dividas',
-                  sair: false,
                   page: ListaDeDividas(),
                 )// Tem que mudar a função
               ],

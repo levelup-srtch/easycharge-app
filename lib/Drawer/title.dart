@@ -4,9 +4,8 @@ class DrawerTitle extends StatelessWidget {
   final IconData icon;
   final String text;
   final Widget page;
-  final bool sair;
 
-  const DrawerTitle({required this.icon, required this.text, required this.page, required this.sair});
+  const DrawerTitle({required this.icon, required this.text, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -14,21 +13,12 @@ class DrawerTitle extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          if (sair) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => page,
-              ),
-            );
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => page,
-              ),
-            );
-          }
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (BuildContext context) => page,
+            ),
+              (route) => false,
+          );
         },
         child: SizedBox(
           height: 60.0,
