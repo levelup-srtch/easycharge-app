@@ -6,7 +6,7 @@ class ListaClientes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Clientes'),
+        title: const Text('Lista Clientes'),
       ),
       body: Column(
         children: [
@@ -33,7 +33,7 @@ class ItemCliente extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.people),
         title: Text(cliente.nome),
-        subtitle: Text('CPF: ' + cliente.cpf),
+        subtitle: Text('CPF: ' + cliente.cpf)
       ),
     );
   }
