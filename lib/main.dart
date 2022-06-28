@@ -7,7 +7,9 @@ class EasychargeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ListagemDeClientes(),
+      home: Scaffold(
+        body: ListaClientes(),
+      ),
     );
   }
 }

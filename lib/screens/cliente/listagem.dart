@@ -1,37 +1,41 @@
 import 'package:easycharge/models/cliente.dart';
 import 'package:flutter/material.dart';
 
-class ListagemDeClientes extends StatelessWidget {
+class ListaClientes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Easycharge - Listagem de clientes'),
+        title: const Text('Lista de Clientes'),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          CardDeCliente(Cliente('Cácio Costa', '123.123.123-33')),
-          CardDeCliente(Cliente('Olívia Fera do Flutter', '333.666.999-00'))
+          ItemCliente(Cliente('José Roberto', '031.845.201-45')),
+          ItemCliente(Cliente('Claudia Silva', '090.651.414-21')),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
 }
 
-class CardDeCliente extends StatelessWidget {
+class ItemCliente extends StatelessWidget {
+  final Cliente cliente;
 
-  Cliente cliente;
-  CardDeCliente(this.cliente);
+  ItemCliente(this.cliente);
 
   @override
   Widget build(BuildContext context) {
-    return  Card(
+    return Card(
       child: ListTile(
+        leading: const Icon(Icons.people),
         title: Text(cliente.nome),
         subtitle: Text('CPF: ' + cliente.cpf),
-        leading: Icon(Icons.people),
       ),
     );
   }
-
 }
+
