@@ -1,15 +1,19 @@
 import 'package:easycharge/screens/cliente/listagem.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(EasychargeApp());
+import 'models/listaClientes.dart';
+
+void main() => runApp(ChangeNotifierProvider(
+  child: EasychargeApp(),
+  create: (context) => ListaDeClientes(),
+));
 
 class EasychargeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: ListaClientes(),
-      ),
+      home: ListagemDeClientes(),
     );
   }
 }
