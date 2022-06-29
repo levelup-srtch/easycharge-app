@@ -1,11 +1,12 @@
+import 'package:easycharge/database/dao/cliente_dao.dart';
 import 'package:flutter/material.dart';
 
-import '../../database/app_database.dart';
 import '../../models/cliente.dart';
 import 'cliente_formulario.dart';
 
 class ClientesLista extends StatelessWidget {
-  final List<Clientes> clientes = [];
+
+  final ClienteDAO _dao = ClienteDAO();
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,7 @@ class ClientesLista extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<List<Clientes>>(
-        initialData: [],
-        future: buscarTodos(),
+        future: _dao.buscarTodos(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

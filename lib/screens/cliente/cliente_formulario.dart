@@ -1,10 +1,9 @@
+import 'package:easycharge/database/dao/cliente_dao.dart';
 import 'package:flutter/material.dart';
 
-import '../../database/app_database.dart';
 import '../../models/cliente.dart';
 
 class ClientesFormulario extends StatefulWidget {
-
   @override
   State<ClientesFormulario> createState() => _ClientesFormularioState();
 }
@@ -12,7 +11,7 @@ class ClientesFormulario extends StatefulWidget {
 class _ClientesFormularioState extends State<ClientesFormulario> {
   final TextEditingController _nomeControlador = TextEditingController();
   final TextEditingController _cpfControlador = TextEditingController();
-
+  final ClienteDAO _dao = ClienteDAO();
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +22,9 @@ class _ClientesFormularioState extends State<ClientesFormulario> {
         ),
       ),
       body: Padding(
-        padding:  const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: ListView(
-          children:  [
+          children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
               child: TextField(
@@ -49,7 +48,6 @@ class _ClientesFormularioState extends State<ClientesFormulario> {
                 keyboardType: TextInputType.number,
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -58,9 +56,8 @@ class _ClientesFormularioState extends State<ClientesFormulario> {
                   final String nome = _nomeControlador.text;
                   final String cpf = _cpfControlador.text;
 
-                  final Clientes novoCliente = Clientes(0,nome, cpf);
-                  salvar(novoCliente).then((id) => Navigator.pop(context,novoCliente));
-
+                  final Clientes novoCliente = Clientes(0, nome, cpf);
+                  _dao.salvar(novoCliente).then((id) => Navigator.pop(context));
                 },
               ),
             ),
