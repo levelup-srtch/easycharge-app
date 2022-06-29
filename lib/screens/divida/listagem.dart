@@ -14,7 +14,7 @@ class ListagemDeDividas extends StatelessWidget {
         title: Text('Easycharge - Listagem de dividas'),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Text('+'),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return FormularioDeDivida();

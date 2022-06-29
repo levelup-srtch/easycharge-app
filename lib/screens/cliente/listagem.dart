@@ -13,7 +13,7 @@ class ListagemDeClientes extends StatelessWidget {
         title: Text('Easycharge - Listagem de clientes'),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Text('+'),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return FormularioDeCliente();

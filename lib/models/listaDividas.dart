@@ -1,5 +1,5 @@
 import 'package:easycharge/models/divida.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ListaDeDividas extends ChangeNotifier {
   List<Divida> _dividas = [];

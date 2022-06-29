@@ -1,20 +1,36 @@
-import 'package:easycharge/screens/cliente/formulario.dart';
+import 'package:easycharge/models/listaDividas.dart';
 import 'package:easycharge/screens/cliente/listagem.dart';
-import 'package:easycharge/screens/divida/formulario.dart';
+import 'package:easycharge/screens/divida/listagem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'models/listaClientes.dart';
 
-void main() => runApp(ChangeNotifierProvider(
+void main() => runApp(MultiProvider(
+  providers: [
+    ChangeNotifierProvider(
+      create: (context) => ListaDeClientes()
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ListaDeDividas()
+    ),
+  ],
   child: EasychargeApp(),
-  create: (context) => ListaDeClientes(),
 ));
 
 class EasychargeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.purple[900],
+          appBarTheme: AppBarTheme(color:Colors.purple[900]),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Colors.purple[700],
+            textTheme: ButtonTextTheme.primary,
+          ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.purple[700])
+      ),
       home: MyStatefulWidget(),
     );
   }
@@ -29,26 +45,20 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Cliente',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Divida',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Cobrança',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if(index == 0){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return ListagemDeClientes();
+          }));
+      }
+      if(index == 1){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return ListagemDeDividas();
+          }));
+      }
     });
   }
 
@@ -58,9 +68,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
         title: const Text('EasyCharge'),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -77,7 +85,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.grey[800],
         onTap: _onItemTapped,
       ),
     );
