@@ -14,12 +14,13 @@ class Dashboard extends StatelessWidget {
         ),
       ),
       body: Column(
+
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(child: Image.asset('images/logo.jpg')),
+            child: Center(child: Image.asset('assets/images/logo.jpg')),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -53,6 +54,7 @@ class Dashboard extends StatelessWidget {
           )
         ],
       ),
+      // backgroundColor: Color.fromRGBO(32,92,92,1),
     );
   }
 }

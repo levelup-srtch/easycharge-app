@@ -1,11 +1,11 @@
-import 'package:easycharge/database/dao/cliente_dao.dart';
 import 'package:flutter/material.dart';
 
+import '../../database/dao/cliente_dao.dart';
 import '../../models/cliente.dart';
 
 class ClientesFormulario extends StatefulWidget {
   @override
-  State<ClientesFormulario> createState() => _ClientesFormularioState();
+  _ClientesFormularioState createState() => _ClientesFormularioState();
 }
 
 class _ClientesFormularioState extends State<ClientesFormulario> {
@@ -17,50 +17,55 @@ class _ClientesFormularioState extends State<ClientesFormulario> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: Center(
           child: Text('Novo Cliente'),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-              child: TextField(
-                controller: _nomeControlador,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nome',
-                ),
-                style: const TextStyle(fontSize: 16),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: _nomeControlador,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Nome',
+              ),
+              style: TextStyle(
+                fontSize: 24.0,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+              padding: const EdgeInsets.only(top: 8.0),
               child: TextField(
                 controller: _cpfControlador,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'CPF',
                 ),
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
                 keyboardType: TextInputType.number,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                child: const Text('Salvar'),
-                onPressed: () {
-                  final String nome = _nomeControlador.text;
-                  final String cpf = _cpfControlador.text;
-
-                  final Clientes novoCliente = Clientes(0, nome, cpf);
-                  _dao.salvar(novoCliente).then((id) => Navigator.pop(context));
-                },
+              padding: const EdgeInsets.only(top: 16.0),
+              child: SizedBox(
+                width: double.maxFinite,
+                child: ElevatedButton(
+                  child: Text('Salvar'),
+                  onPressed: () {
+                    final String nome = _nomeControlador.text;
+                    final String cpf = _cpfControlador.text;
+                    final Clientes novoCliente = Clientes(0, nome, cpf);
+                    _dao
+                        .salvar(novoCliente)
+                        .then((id) => Navigator.pop(context));
+                  },
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -1,22 +1,25 @@
-import 'package:easycharge/database/dao/cliente_dao.dart';
+import 'package:easycharge/screens/cliente/cliente_formulario.dart';
 import 'package:flutter/material.dart';
 
+import '../../database/dao/cliente_dao.dart';
 import '../../models/cliente.dart';
-import 'cliente_formulario.dart';
 
-class ClientesLista extends StatelessWidget {
+class ClientesLista extends StatefulWidget {
+  @override
+  _ClientesListaState createState() => _ClientesListaState();
+}
 
+class _ClientesListaState extends State<ClientesLista> {
   final ClienteDAO _dao = ClienteDAO();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Clientes'),
-        ),
+        title: Text('Clientes'),
       ),
       body: FutureBuilder<List<Clientes>>(
+        initialData: List(),
         future: _dao.buscarTodos(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -27,12 +30,13 @@ class ClientesLista extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: <Widget>[
                     CircularProgressIndicator(),
-                    Text('Carregando')
+                    Text('Loading')
                   ],
                 ),
               );
+              break;
             case ConnectionState.active:
               break;
             case ConnectionState.done:
@@ -44,42 +48,54 @@ class ClientesLista extends StatelessWidget {
                 },
                 itemCount: clientes.length,
               );
+              break;
           }
-          return const Text('Uknown error');
+          return Text('Unknown error');
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
               builder: (context) => ClientesFormulario(),
             ),
+          )
+              .then(
+                (value) => setState(() {}),
           );
         },
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }
 }
 
 class _ClienteItem extends StatelessWidget {
-  final Clientes clientes;
+  final Clientes cliente;
 
-  const _ClienteItem(this.clientes);
+  _ClienteItem(this.cliente);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         title: Text(
-          clientes.nome,
-          style: const TextStyle(fontSize: 24),
+          cliente.nome,
+          style: TextStyle(
+            fontSize: 24.0,
+          ),
         ),
         subtitle: Text(
-          clientes.cpf.toString(),
-          style: const TextStyle(fontSize: 16),
+         cliente.cpf.toString(),
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
         ),
       ),
     );
   }
 }
+
