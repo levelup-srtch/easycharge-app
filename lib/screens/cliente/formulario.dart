@@ -6,8 +6,8 @@ import '../../models/listaClientes.dart';
 
 
 class FormularioDeCliente extends StatelessWidget {
-  TextEditingController nomeController = TextEditingController();
-  TextEditingController cpfController = TextEditingController();
+  TextEditingController _nomeController = TextEditingController();
+  TextEditingController _cpfController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +18,20 @@ class FormularioDeCliente extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              controller: cpfController,
-              decoration: InputDecoration(
-                labelText: 'CPF',
-                hintText: '000.000.000-00',
-              ),
+              controller: _nomeController,
+              decoration: InputDecoration(labelText: 'Nome'),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              controller: nomeController,
-              decoration: InputDecoration(labelText: 'Nome'),
+              controller: _cpfController,
+              decoration: InputDecoration(
+                labelText: 'CPF',
+                hintText: '000.000.000-00',
+                ),
+              maxLength: 14,
+              keyboardType: TextInputType.number
             ),
           ),
           Padding(
@@ -38,8 +40,8 @@ class FormularioDeCliente extends StatelessWidget {
               child: Text('Cadastrar'),
               onPressed: () {
                 debugPrint('CADASTROU...');
-                String cpfDoCliente = cpfController.text;
-                String nomeDoCliente = nomeController.text;
+                String cpfDoCliente = _cpfController.text;
+                String nomeDoCliente = _nomeController.text;
 
                 Cliente novoCliente = Cliente(nomeDoCliente, cpfDoCliente);
 
