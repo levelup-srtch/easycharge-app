@@ -5,7 +5,8 @@ class DrawerTitle extends StatelessWidget {
   final String text;
   final Widget page;
 
-  const DrawerTitle({required this.icon, required this.text, required this.page});
+  const DrawerTitle(
+      {required this.icon, required this.text, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class DrawerTitle extends StatelessWidget {
             MaterialPageRoute(
               builder: (BuildContext context) => page,
             ),
-              (route) => false,
+            (route) => false,
           );
         },
         child: SizedBox(

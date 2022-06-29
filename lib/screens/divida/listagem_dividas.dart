@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../Drawer/custom_drawer.dart';
-import '../../models/cliente.dart';
+import '../../components/Drawer/custom_drawer.dart';
+import '../../models/divida.dart';
 
-class ListaDeClientes extends StatelessWidget {
+class ListaDeDividas extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +22,7 @@ class ListaDeClientes extends StatelessWidget {
           ),
         ],
         title: const Text(
-          'Clientes',
+          'Dividas',
           style: TextStyle(
             fontSize: 16.0,
           ),
@@ -29,9 +30,9 @@ class ListaDeClientes extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ItemCliente(Cliente('Caio', '0664939166')),
-          ItemCliente(Cliente('Mary', '83152539134')),
-          ItemCliente(Cliente('Berg', '49486225168')),
+          ItemCliente(Divida('R\$ 1536,00', 'ABERTA', '03/08/18')),
+          ItemCliente(Divida('R\$ 1065,00', 'ABERTA', '24/07/20')),
+          ItemCliente(Divida('R\$ 100,00', 'ABERTA', '01/02/20')),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -44,17 +45,17 @@ class ListaDeClientes extends StatelessWidget {
 }
 
 class ItemCliente extends StatelessWidget {
-  final Cliente _cliente;
+  final Divida _divida;
 
-  ItemCliente(this._cliente);
+  ItemCliente(this._divida);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: const Icon(Icons.person),
-        title: Text(_cliente.nome),
-        subtitle: Text(_cliente.cpf),
+        leading: const Icon(Icons.attach_money_rounded),
+        title: Text(_divida.status),
+        subtitle: Text('Valor:${_divida.valor} \t Abertura: ${_divida.abertura}'),
       ),
     );
   }

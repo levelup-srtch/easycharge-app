@@ -1,22 +1,19 @@
-import 'package:easycharge/Drawer/title.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/cliente/cliente_lista.dart';
-import '../screens/divida/divida_lista.dart';
-
-
+import './title.dart';
+import '../../screens/cliente/listagem_clientes.dart';
+import '../../screens/divida/listagem_dividas.dart';
 
 class CustomDrawer extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     Widget _buildDrawerBack() => Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.black12, Colors.black],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)),
-    );
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Colors.black38, Colors.black],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter)),
+        );
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       child: Drawer(
@@ -38,7 +35,9 @@ class CustomDrawer extends StatelessWidget {
                           child: IconButton(
                             alignment: Alignment.centerLeft,
                             icon: const Icon(Icons.arrow_back_rounded),
-                            onPressed: () {Navigator.pop(context);},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             color: Colors.white,
                           )),
                       const Positioned(
@@ -63,16 +62,16 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 const Divider(),
-                 DrawerTitle(
+                DrawerTitle(
                   icon: Icons.person_outline_outlined,
                   text: 'Clientes',
-                  page: ListaDeClientes(),
-                ) ,
+                  page: ListagemClientes(),
+                ),
                 DrawerTitle(
                   icon: Icons.account_balance_outlined,
                   text: 'Dividas',
                   page: ListaDeDividas(),
-                )// Tem que mudar a função
+                )
               ],
             )
           ],
