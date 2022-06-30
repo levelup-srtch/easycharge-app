@@ -1,8 +1,20 @@
-class Cliente {
+class Clientes{
 
-  String nome;
-  String cpf;
+  final int id;
+  final String nome;
+  final String cpf;
 
-  Cliente(this.nome, this.cpf);
+
+  Clientes(
+      this.id,
+      this.nome,
+      this.cpf
+  );
+
+  @override
+  String toString() {
+    return 'Clientes{id: $id, nome: $nome, cpf: $cpf}';
+  }
+
 
 }
