@@ -9,10 +9,16 @@ class FormularioDeCliente extends StatelessWidget {
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _cpfController = TextEditingController();
 
+  bool _validaCampos(){
+    if (_cpfController.text.length > 0 && _nomeController.text.length > 0)
+      return true;
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Easycharge - Cadastro de clientes')),
+      appBar: AppBar(title: Text('Cadastro de cliente')),
       body: ListView(
         children: <Widget>[
           Padding(
@@ -39,16 +45,37 @@ class FormularioDeCliente extends StatelessWidget {
             child: ElevatedButton(
               child: Text('Cadastrar'),
               onPressed: () {
-                debugPrint('CADASTROU...');
-                String cpfDoCliente = _cpfController.text;
-                String nomeDoCliente = _nomeController.text;
+                if(_validaCampos()) {
+                  debugPrint('CADASTROU...');
+                  String cpfDoCliente = _cpfController.text;
+                  String nomeDoCliente = _nomeController.text;
 
-                Cliente novoCliente = Cliente(nomeDoCliente, cpfDoCliente);
+                  Cliente novoCliente = Cliente(nomeDoCliente, cpfDoCliente);
 
-                ListaDeClientes listaClientes = Provider.of<ListaDeClientes>(context, listen: false);
-                listaClientes.adicionaCliente(novoCliente);
+                  ListaDeClientes listaClientes = Provider.of<ListaDeClientes>(
+                      context, listen: false);
+                  listaClientes.adicionaCliente(novoCliente);
 
-                Navigator.pop(context);
+                  Navigator.pop(context);
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        title: Text('ATENÇÃO'),
+                        content: Text('Todos os campos devem ser preenchidos!'),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: (){
+                                Navigator.pop(context);
+                              },
+                            child: Text('Fechar'),
+                          )
+                        ],
+                      );
+                    }
+                  );
+                }
               },
             ),
           ),

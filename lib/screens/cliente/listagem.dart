@@ -10,7 +10,7 @@ class ListagemDeClientes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Easycharge - Listagem de clientes'),
+        title: Text('Listagem de clientes'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
