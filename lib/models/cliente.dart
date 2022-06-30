@@ -1,20 +1,47 @@
-class Clientes{
+import 'package:flutter/material.dart';
 
-  final int id;
-  final String nome;
-  final String cpf;
+class Cliente extends ChangeNotifier{
 
+  String _nome;
+  String _email;
+  String _cpf;
+  String _celular;
+  String _cargo;
+  String _status;
 
-  Clientes(
-      this.id,
-      this.nome,
-      this.cpf
-  );
+  String get nome => _nome;
 
-  @override
-  String toString() {
-    return 'Clientes{id: $id, nome: $nome, cpf: $cpf}';
+  String get email => _email;
+
+  String get cpf => _cpf;
+
+  String get celular => _celular;
+
+  String get cargo => _cargo;
+
+  String get status => _status;
+
+  set status(String value) {
+    _status = value;
   }
 
+  set cargo(String value) {
+    _cargo = value;
+  }
 
+  set celular(String value) {
+    _celular = value;
+  }
+
+  set cpf(String value) {
+    _cpf = value;
+  }
+
+  set email(String value) {
+    _email = value;
+  }
+
+  set nome(String value) {
+    _nome = value;
+  }
 }

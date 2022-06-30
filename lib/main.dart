@@ -1,4 +1,4 @@
-import 'package:easycharge/screens/login.dart';
+import 'package:easycharge/screens/autenticacao/login.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(EasychargeApp());

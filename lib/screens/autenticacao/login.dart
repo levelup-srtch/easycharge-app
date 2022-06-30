@@ -1,10 +1,11 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:easycharge/screens/autenticacao/registrar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 
-import '../components/mensagem.dart';
-import 'dashboard.dart';
+import '../../components/mensagem.dart';
+import '../dashboard.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController _cpfControlador = TextEditingController();
@@ -50,9 +51,7 @@ class Login extends StatelessWidget {
     );
   }
 
-
-
-  Widget _construindoFormulario(context){
+  Widget _construindoFormulario(context) {
     return Form(
       key: _formKey,
       child: Column(
@@ -80,11 +79,11 @@ class Login extends StatelessWidget {
               CpfInputFormatter(),
             ],
             validator: (value) {
-              if(value.length == 0)
-                return 'Informe o CPF !';
+              if (value.length == 0) return 'Informe o CPF !';
 
-              if(value.length <14)
-                return 'CPF invalido !';
+              if (value.length < 14) return 'CPF invalido !';
+
+              return null;
             },
             keyboardType: TextInputType.number,
             controller: _cpfControlador,
@@ -98,10 +97,10 @@ class Login extends StatelessWidget {
                 labelText: 'Senha',
               ),
               maxLength: 15,
-
               validator: (value) {
-                if(value.length == 0)
-                  return 'Digite a Senha !';
+                if (value.length == 0) return 'Digite a Senha !';
+
+                return null;
               },
               keyboardType: TextInputType.text,
               controller: _senhaControlador),
@@ -111,19 +110,22 @@ class Login extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  if(_cpfControlador.text == '111.111.111-11' && _senhaControlador.text == 'abc456'){
+                  if (_cpfControlador.text == '111.111.111-11' &&
+                      _senhaControlador.text == 'abc456') {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                         builder: (context) => Dashboard(),
                       ),
-                          (route) => false,
+                      (route) => false,
                     );
-                  }else{
-                    exibirAlerta(context:  context, titulo: 'ATENÇÂO', content: 'CPF ou Senha incorretos !');
+                  } else {
+                    exibirAlerta(
+                        context: context,
+                        titulo: 'ATENÇÂO',
+                        content: 'CPF ou Senha incorretos !');
                   }
                 }
-            },
-
+              },
               child: const Text(
                 'CONTINUAR',
                 style: TextStyle(
@@ -147,7 +149,14 @@ class Login extends StatelessWidget {
           ),
           SizedBox(height: 25),
           OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Registrar(),
+                ),
+              );
+            },
             child: Text(
               'Criar uma Conta',
               style: TextStyle(
