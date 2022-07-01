@@ -48,6 +48,7 @@ class ItemCliente extends StatelessWidget {
         leading: const Icon(Icons.people),
         title: Text(cliente.nome),
         subtitle: Text('CPF: ' + cliente.cpf)
+
       ),
     );
   }
