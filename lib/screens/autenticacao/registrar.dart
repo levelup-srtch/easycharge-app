@@ -1,6 +1,10 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/funcionarios/funcionario.dart';
+import '../dashboard.dart';
 
 class Registrar extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -26,17 +30,18 @@ class Registrar extends StatelessWidget {
               children: [
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Nome',
+                    labelText: 'Nome Completo',
                   ),
                   controller: _nomeController,
                   maxLength: 255,
                   keyboardType: TextInputType.text,
                   validator: (value) {
-                    if (value.contains(" "))
+
+                    if (!value.contains(" "))
                       return 'Informe pelo menos um sobrenome!';
 
-                    if (value.length < 3) return 'Nome inválido!';
-
+                    if (value.isEmpty)
+                      return 'Campo Obrigatório';
                     return null;
                   },
                 ),
@@ -51,7 +56,7 @@ class Registrar extends StatelessWidget {
                     if (!value.contains("@") || !value.contains('.'))
                       return 'Email inválido!';
 
-                    if (value.length < 3) return 'Email muito curto!';
+                    if (value.isEmpty) return 'Email muito curto!';
 
                     return null;
                   },
@@ -64,7 +69,11 @@ class Registrar extends StatelessWidget {
                   maxLength: 14,
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value.length != 14) return 'CPF inválido';
+                    if (value.length != 14)
+                      return 'CPF inválido';
+
+                    if (value.isEmpty)
+                      return 'Campo Obrigatório';
 
                     return null;
                   },
@@ -78,10 +87,14 @@ class Registrar extends StatelessWidget {
                     labelText: 'Celular',
                   ),
                   controller: _celularController,
-                  maxLength: 14,
+                  maxLength: 15,
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value.length < 11) return 'Celular inválido';
+                    if (value.length < 12)
+                      return 'Celular inválido';
+
+                    if (value.isEmpty)
+                      return 'Campo Obrigatório';
 
                     return null;
                   },
@@ -103,7 +116,8 @@ class Registrar extends StatelessWidget {
                     _statusController.text = novoStatus;
                   },
                   validator: (value) {
-                    if (value == null) return 'Selecione um estado!';
+                    if (value == null)
+                      return 'Selecione um estado!';
 
                     return null;
                   },
@@ -111,7 +125,8 @@ class Registrar extends StatelessWidget {
                 DropdownButtonFormField(
                   isExpanded: true,
                   decoration: InputDecoration(labelText: 'Cargo'),
-                  items: ['Senior', 'Pleno', 'Junior', 'Estagiário '].map((String cargo) {
+                  items: ['Senior', 'Pleno', 'Junior', 'Estagiário ']
+                      .map((String cargo) {
                     return DropdownMenuItem(
                       child: Text(cargo),
                       value: cargo,
@@ -121,10 +136,37 @@ class Registrar extends StatelessWidget {
                     _cargoController.text = novoCargo;
                   },
                   validator: (value) {
-                    if (value == null) return 'Selecione um estado!';
+                    if (value == null)
+                      return 'Selecione um estado!';
 
                     return null;
                   },
+                ),
+                SizedBox(height: 40),
+                OutlinedButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      _salvar(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Dashboard(),
+                          ),
+                          (route) => false);
+                    }
+                  },
+                  child: Text(
+                    'Finalizar Cadastro',
+                    style: TextStyle(
+                      color: Color.fromRGBO(27, 200, 200, 1.0),
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
+                      width: 2,
+                      color: Color.fromRGBO(27, 200, 200, 1.5),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -132,5 +174,9 @@ class Registrar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _salvar(context) {
+    Provider.of<Funcionario>(context).nome = _nomeController.text;
   }
 }

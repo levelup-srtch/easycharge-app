@@ -2,12 +2,13 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:easycharge/screens/autenticacao/registrar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
+
 
 import '../../components/mensagem.dart';
 import '../dashboard.dart';
 
 class Login extends StatelessWidget {
+
   final TextEditingController _cpfControlador = TextEditingController();
   final TextEditingController _senhaControlador = TextEditingController();
 
@@ -17,7 +18,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 70),
+        padding: EdgeInsets.only(top: 150),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -26,7 +27,7 @@ class Login extends StatelessWidget {
                   child:
                       Image.asset('assets/images/easycharge.png', width: 280)),
               SizedBox(
-                height: 20,
+                height: 130,
               ),
               Align(
                 alignment: Alignment.center,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/funcionarios/funcionario.dart';
 import 'autenticacao/login.dart';
+import 'cliente/listaClientes.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -15,23 +18,25 @@ class Dashboard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(0.0),
             child: Center(child: Image.asset('assets/images/logo.jpg')),
           ),
           Row(
             children: [
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
                   color: Theme.of(context).primaryColor,
                   child: InkWell(
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => ClientesLista(),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ListaClientes(),
+                        ),
+                      );
                     },
                     child: Container(
                         padding: const EdgeInsets.all(8.0),
@@ -62,14 +67,13 @@ class Dashboard extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => Login(),
                         ),
-                          (route) => false,
+                        (route) => false,
                       );
                     },
                     child: Container(
                         padding: const EdgeInsets.all(8.0),
                         height: 100,
                         width: 150,
-
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +81,8 @@ class Dashboard extends StatelessWidget {
                               Icon(Icons.logout, color: Colors.white, size: 26),
                               Text(
                                 'Sair',
-                                style: TextStyle(color: Colors.white, fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ])),
                   ),
