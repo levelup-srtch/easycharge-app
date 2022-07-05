@@ -12,7 +12,7 @@ class FormularioDeCliente extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Easycharge - Cadastro de clientes')),
+      appBar: AppBar(title: Text('Cadastro de clientes')),
       body: Consumer<WizardCadastroDeClienteState>(
         builder: (context, wizardState, child) {
           return Stepper(
@@ -50,6 +50,8 @@ class FormularioDeCliente extends StatelessWidget {
 
   void _salvaPasso2(BuildContext context) {
     WizardCadastroDeClienteState state = Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+    passoNome.armazenaDadosNoWizard(context);
+
     Cliente cliente = state.criaCliente();
 
     var listaDeClientes = Provider.of<ListaDeClientesState>(context, listen: false);
@@ -71,7 +73,7 @@ class _CpfForm extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: TextFormField(
           controller: _cpfController,
-          validator: (valor) => valor == null || valor.length < 2 ? 'Nome inválido' : null,
+          validator: (valor) => valor == null || valor.length < 14 ? 'CPF inválido' : null,
           decoration: InputDecoration(
             labelText: 'CPF',
             hintText: '000.000.000-00',
@@ -102,9 +104,10 @@ class _NomeForm extends StatelessWidget {
       key: _key,
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: TextField(
+        child: TextFormField(
           controller: _nomeController,
           decoration: InputDecoration(labelText: 'Nome'),
+          validator: (valor) => valor == null || valor.trim().isEmpty ? 'Nome inválido' : null,
         ),
       ),
     );

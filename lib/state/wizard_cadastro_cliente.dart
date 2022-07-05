@@ -38,7 +38,7 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
   }
 
   Cliente criaCliente() {
-    Cliente cliente = Cliente(_cpf, _nome);
+    Cliente cliente = Cliente(_nome, _cpf);
     _cpf = '';
     _nome = '';
 
