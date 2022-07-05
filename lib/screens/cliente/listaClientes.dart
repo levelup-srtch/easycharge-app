@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/clientes/listaClientes.dart';
+import '../menuDrawer.dart';
 import 'formulario.dart';
 
 class ListaClientes extends StatelessWidget {
@@ -12,6 +13,7 @@ class ListaClientes extends StatelessWidget {
         appBar: AppBar(
           title: Text('Clientes'),
         ),
+        drawer: MenuDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Navigator.push(

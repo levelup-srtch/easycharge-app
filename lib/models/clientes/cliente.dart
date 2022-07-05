@@ -4,7 +4,7 @@ import 'endereco.dart';
 
 class Cliente extends ChangeNotifier{
 
-  int _id;
+
   String _nome;
   String _cpf;
   String _telefone;
@@ -12,9 +12,13 @@ class Cliente extends ChangeNotifier{
   String _profissao;
   String _renda;
   String _status;
-  Endereco _endereco;
+  String _rua;
+  String _numero;
+  String _complemento;
+  String _bairro;
+  String _cidade;
+  String _estado;
 
-  int get id => _id;
 
   String get nome => _nome;
 
@@ -29,13 +33,6 @@ class Cliente extends ChangeNotifier{
   String get renda => _renda;
 
   String get status => _status;
-
-  Endereco get endereco => _endereco;
-
-  set endereco(Endereco value) {
-    _endereco = value;
-    notifyListeners();
-  }
 
   set status(String value) {
     _status = value;
@@ -72,20 +69,56 @@ class Cliente extends ChangeNotifier{
     notifyListeners();
   }
 
-  set id(int value) {
-    _id = value;
-    notifyListeners();
+  String get estado => _estado;
+
+  set estado(String value) {
+    _estado = value;
   }
 
-  // tela de cadastro
+  String get cidade => _cidade;
 
-  int _stepAtual = 0;
-
-  int get stepAtual => _stepAtual;
-
-  set stepAtual(int value) {
-    _stepAtual = value;
-
-    notifyListeners();
+  set cidade(String value) {
+    _cidade = value;
   }
+
+  String get bairro => _bairro;
+
+  set bairro(String value) {
+    _bairro = value;
+  }
+
+  String get complemento => _complemento;
+
+  set complemento(String value) {
+    _complemento = value;
+  }
+
+  String get numero => _numero;
+
+  set numero(String value) {
+    _numero = value;
+  }
+
+  String get rua => _rua;
+
+  set rua(String value) {
+    _rua = value;
+  }
+
+  Cliente(
+      this._nome,
+      this._cpf,
+      this._telefone,
+      this._email,
+      this._profissao,
+      this._renda,
+      this._status,
+      this._rua,
+      this._numero,
+      this._complemento,
+      this._bairro,
+      this._cidade,
+      this._estado,
+
+      );
 }

@@ -1,4 +1,4 @@
-import 'package:easycharge/screens/autenticacao/login.dart';
+import 'package:easycharge/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,17 +8,11 @@ import 'models/funcionarios/listaFuncionario.dart';
 
 void main() => runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context)=> ListaDeFuncionarios()
-        ),
-        ChangeNotifierProvider(
-            create: (context)=> ListaDeClientes()
-        ),
-        ChangeNotifierProvider(
-            create: (context)=> ListaEndereco()
-        ),
+        ChangeNotifierProvider(create: (context) => ListaDeFuncionarios()),
+        ChangeNotifierProvider(create: (context) => ListaDeClientes()),
+        ChangeNotifierProvider(create: (context) => ListaEndereco()),
       ],
-  child: EasychargeApp(),
+      child: EasychargeApp(),
     ));
 
 class EasychargeApp extends StatelessWidget {
@@ -33,9 +27,13 @@ class EasychargeApp extends StatelessWidget {
           buttonTheme: ButtonThemeData(
             textTheme: ButtonTextTheme.primary,
           ),
+          // drawerTheme: DrawerThemeData(
+          //   backgroundColor: Color.fromRGBO(171, 229, 230, 1.0)
+          // ),
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(secondary: Color.fromRGBO(102, 205, 170, 1))),
-      home: Login(),
+
+      home: Dashboard(),
     );
   }
 }
