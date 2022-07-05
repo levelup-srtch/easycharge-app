@@ -1,10 +1,10 @@
-import 'package:easycharge/models/listaDividas.dart';
+import 'package:easycharge/state/listaDividas.dart';
 import 'package:easycharge/screens/cliente/listagem.dart';
 import 'package:easycharge/screens/divida/listagem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'models/listaClientes.dart';
+import 'state/listaClientes.dart';
 
 void main() => runApp(MultiProvider(
   providers: [

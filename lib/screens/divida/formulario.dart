@@ -1,5 +1,5 @@
 import 'package:easycharge/models/divida.dart';
-import 'package:easycharge/models/listaDividas.dart';
+import 'package:easycharge/state/listaDividas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -2,7 +2,7 @@ import 'package:easycharge/models/cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/listaClientes.dart';
+import '../../state/listaClientes.dart';
 import 'formulario.dart';
 
 class ListagemDeClientes extends StatelessWidget {

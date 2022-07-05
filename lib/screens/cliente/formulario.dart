@@ -1,53 +1,84 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flux_validator_dart/flux_validator_dart.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/cliente.dart';
-import '../../models/listaClientes.dart';
+import '../../state/listaClientes.dart';
+import '../../state/wizard_cadastro_cliente.dart';
 
-class FormularioDeCliente extends StatefulWidget{
-  @override
-  FormularioDeClienteState createState() =>FormularioDeClienteState();
-}
-class FormularioDeClienteState extends State<FormularioDeCliente> {
-  String _errorMessage = '';
+class FormularioDeCliente extends StatelessWidget {
 
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _cpfController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _cargoController = TextEditingController();
-  TextEditingController _ruaController = TextEditingController();
-  TextEditingController _bairroController = TextEditingController();
-  TextEditingController _numeroController = TextEditingController();
-
-
-  final _formkey = GlobalKey<FormState>();
+  var passoDadosPessoais = _DadosPessoaisForm();
+  var passoEndereco = _EnderecoForm();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Cadastro de cliente')),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _construirFormulario(context),
-            _cadastrar(context)
-          ],
-        ),
+      body: Consumer<WizardCadastroDeClienteState>(
+        builder: (context, wizardState, child) {
+          return Stepper(
+            currentStep: wizardState.passoAtual,
+            onStepContinue: () {
+              var funcoes = [_salvaPasso1, _salvaPasso2];
+
+              funcoes[wizardState.passoAtual](context);
+            },
+            onStepCancel: () => wizardState.volta(),
+            steps: [
+              Step(
+                title: Text('Identificação'),
+                content: passoDadosPessoais,
+              ),
+              Step(
+                title: Text('Dados pessoais'),
+                content: passoEndereco,
+              ),
+            ],
+          );
+        },
       ),
-      
     );
   }
 
-  Widget _construirFormulario(context) {
+  void _salvaPasso1(BuildContext context) {
+    if (passoDadosPessoais.isValido()) {
+      WizardCadastroDeClienteState state = Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+      passoDadosPessoais.armazenaDadosNoWizard(context);
+
+      state.avanca();
+    }
+  }
+
+  void _salvaPasso2(BuildContext context) {
+    WizardCadastroDeClienteState state = Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+    Cliente cliente = state.criaCliente();
+
+    var listaDeClientes = Provider.of<ListaDeClientes>(context, listen: false);
+    listaDeClientes.adicionaCliente(cliente);
+
+    Navigator.of(context).pop();
+  }
+}
+
+class _DadosPessoaisForm extends StatelessWidget {
+  TextEditingController _nomeController = TextEditingController();
+  TextEditingController _cpfController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _telefoneController = TextEditingController();
+  TextEditingController _cargoController = TextEditingController();
+  GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
-      key: _formkey,
+      key: _key,
       child: Column(
-        children: <Widget>[
+        children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
               controller: _nomeController,
               decoration: InputDecoration(labelText: 'Nome'),
@@ -55,57 +86,55 @@ class FormularioDeClienteState extends State<FormularioDeCliente> {
                 if(value == null || value.isEmpty){
                   return 'Informe o nome!';
                 }
+
+                if(!value.contains(" "))
+                  return 'Informe pelo menos um sobrenome';
               },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
-                controller: _cpfController,
-                decoration: InputDecoration(
+              controller: _cpfController,
+              decoration: InputDecoration(
                   labelText: 'CPF',
                   hintText: '000.000.000-00'),
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CpfInputFormatter()
-                ],
-                validator: (value){
-                  if(value!.isEmpty) {
-                    return 'Informe o cpf!';
-                  }
-
-
-                  if (value.length < 11) {
-                    return 'Digite o CPF no formato certo';
-                  }
-
-                },
-                maxLength: 14,
-                keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                CpfInputFormatter()
+              ],
+              validator: (value) => Validator.cpf(value) ? 'CPF inválido' : null,
+              maxLength: 14,
+              keyboardType: TextInputType.number,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(labelText: 'Email'),
-              onChanged: (val){
-                validateEmail(val);
-              },
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Informe o email!';
-                }
-              },
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(labelText: 'Email'),
+                validator: (value) => Validator.email(value) ? 'Email inválido' : null
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(_errorMessage, style: TextStyle(color: Colors.red),),
+            padding: const EdgeInsets.all(35),
+            child: TextFormField(
+              controller: _telefoneController,
+              decoration: InputDecoration(
+                  labelText: 'Telefone',
+                  hintText: '(99) 9999-9999'),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                TelefoneInputFormatter()
+              ],
+              validator: (value) => Validator.phone(value) ? 'Telefone inválido' : null,
+              maxLength: 14,
+              keyboardType: TextInputType.number,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
               controller: _cargoController,
               decoration: InputDecoration(labelText: 'Cargo'),
@@ -116,8 +145,40 @@ class FormularioDeClienteState extends State<FormularioDeCliente> {
               },
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  void armazenaDadosNoWizard(context) {
+    var state = Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+    state.nome = _nomeController.text;
+    state.cpf = _cpfController.text;
+    state.email = _emailController.text;
+    state.telefone = _telefoneController.text;
+    state.cargo = _cargoController.text;
+  }
+
+  bool isValido() {
+    var currentState = _key.currentState;
+    return currentState != null && currentState.validate();
+  }
+}
+
+class _EnderecoForm extends StatelessWidget {
+  TextEditingController _ruaController = TextEditingController();
+  TextEditingController _bairroController = TextEditingController();
+  TextEditingController _numeroController = TextEditingController();
+  GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _key,
+      child: Column(
+        children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
               controller: _ruaController,
               decoration: InputDecoration(labelText: 'Rua'),
@@ -129,7 +190,7 @@ class FormularioDeClienteState extends State<FormularioDeCliente> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
               controller: _bairroController,
               decoration: InputDecoration(labelText: 'Bairro'),
@@ -141,7 +202,7 @@ class FormularioDeClienteState extends State<FormularioDeCliente> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(35),
             child: TextFormField(
               controller: _numeroController,
               decoration: InputDecoration(labelText: 'Número'),
@@ -156,52 +217,16 @@ class FormularioDeClienteState extends State<FormularioDeCliente> {
       ),
     );
   }
-  
-  Widget _cadastrar(context){
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
-      child: ElevatedButton(
-        child: Text('Cadastrar'),
-        onPressed: () {
-          if(_formkey.currentState!.validate()) {
-          debugPrint('CADASTROU...');
-          String cpfDoCliente = _cpfController.text;
-          String nomeDoCliente = _nomeController.text;
-          String email = _emailController.text;
-          String cargo = _cargoController.text;
-          String rua = _ruaController.text;
-          String bairro = _bairroController.text;
-          String numero = _numeroController.text;
 
-
-          Cliente novoCliente = Cliente(nomeDoCliente, cpfDoCliente, email, cargo, rua, bairro, numero);
-
-          ListaDeClientes listaClientes = Provider.of<ListaDeClientes>(
-              context, listen: false);
-          listaClientes.adicionaCliente(novoCliente);
-
-          Navigator.pop(context);
-          }
-        },
-      ),
-    );
+  void armazenaDadosNoWizard(context) {
+    var state = Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+    state.rua = _ruaController.text;
+    state.bairro = _bairroController.text;
+    state.numero = _numeroController.text;
   }
 
-
-  void validateEmail(String val) {
-    if(val.isEmpty){
-      setState(() {
-        _errorMessage = "Email não pode estar vazio";
-      });
-    }else if(!EmailValidator.validate(val, true)){
-      setState(() {
-        _errorMessage = "Email inválido";
-      });
-    }else{
-      setState(() {
-
-        _errorMessage = "";
-      });
-    }
+  bool isValido() {
+    var currentState = _key.currentState;
+    return currentState != null && currentState.validate();
   }
 }
