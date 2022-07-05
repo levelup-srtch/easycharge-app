@@ -1,10 +1,11 @@
 import 'package:easycharge/models/cliente.dart';
-import 'package:easycharge/models/lista_clientes.dart';
+import 'package:easycharge/state/lista_clientes.dart';
 import 'package:easycharge/screens/cliente/formulario.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListagemDeClientes extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +20,7 @@ class ListagemDeClientes extends StatelessWidget {
           }));
         },
       ),
-      body: Consumer<ListaDeClientes>(
+      body: Consumer<ListaDeClientesState>(
         builder: (context, listaDeClientes, child) {
           List<Cliente> todosOsClientes = listaDeClientes.getClientes();
 

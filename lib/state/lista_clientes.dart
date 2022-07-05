@@ -1,7 +1,7 @@
 import 'package:easycharge/models/cliente.dart';
 import 'package:flutter/material.dart';
 
-class ListaDeClientes extends ChangeNotifier {
+class ListaDeClientesState extends ChangeNotifier {
   List<Cliente> _clientes = [];
 
   List<Cliente> getClientes() => _clientes;

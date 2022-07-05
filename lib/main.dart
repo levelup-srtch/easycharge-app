@@ -1,13 +1,22 @@
-import 'package:easycharge/models/lista_clientes.dart';
-import 'package:easycharge/screens/cliente/formulario.dart';
+import 'package:easycharge/state/lista_clientes.dart';
 import 'package:easycharge/screens/cliente/listagem.dart';
+import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(ChangeNotifierProvider(
-  child: EasychargeApp(),
-  create: (context) => ListaDeClientes(),
-));
+void main() => runApp(
+      MultiProvider(
+        child: EasychargeApp(),
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => ListaDeClientesState(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => WizardCadastroDeClienteState(),
+          ),
+        ],
+      ),
+    );
 
 class EasychargeApp extends StatelessWidget {
   @override
@@ -17,10 +26,6 @@ class EasychargeApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
 
 /*
 <easycharge>
