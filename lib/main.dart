@@ -1,6 +1,7 @@
 import 'package:easycharge/state/listaDividas.dart';
 import 'package:easycharge/screens/cliente/listagem.dart';
 import 'package:easycharge/screens/divida/listagem.dart';
+import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,9 @@ void main() => runApp(MultiProvider(
     ),
     ChangeNotifierProvider(
       create: (context) => ListaDeDividas()
+    ),
+    ChangeNotifierProvider(
+        create: (context) => WizardCadastroDeClienteState()
     ),
   ],
   child: EasychargeApp(),

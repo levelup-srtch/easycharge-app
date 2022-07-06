@@ -8,9 +8,15 @@ import '../../models/cliente.dart';
 import '../../state/listaClientes.dart';
 import '../../state/wizard_cadastro_cliente.dart';
 
-class FormularioDeCliente extends StatelessWidget {
+class FormularioDeCliente extends StatefulWidget {
 
+  @override
+  State<FormularioDeCliente> createState() => _FormularioDeClienteState();
+}
+
+class _FormularioDeClienteState extends State<FormularioDeCliente> {
   var passoDadosPessoais = _DadosPessoaisForm();
+
   var passoEndereco = _EnderecoForm();
 
   @override
@@ -29,11 +35,11 @@ class FormularioDeCliente extends StatelessWidget {
             onStepCancel: () => wizardState.volta(),
             steps: [
               Step(
-                title: Text('Identificação'),
+                title: Text('Dados Pessoais'),
                 content: passoDadosPessoais,
               ),
               Step(
-                title: Text('Dados pessoais'),
+                title: Text('Endereço'),
                 content: passoEndereco,
               ),
             ],
