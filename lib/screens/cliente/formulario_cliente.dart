@@ -285,15 +285,10 @@ class _EnderecoForm extends StatelessWidget {
             //     );
             //   }).toList(),)
             DropdownButtonFormField(
-              value: 'AL',
+              hint: Text('Selecione...'),
               isExpanded: true,
-              style: const TextStyle(fontSize: 20.0),
-              decoration: const InputDecoration(
-                labelText: 'Estado',
-                labelStyle: TextStyle(fontSize: 20.0),
-              ),
-              items: Estados.listaEstadosSigla.map((String estado) {
-                return DropdownMenuItem(
+              items: Estados.listaEstadosSigla.map<DropdownMenuItem<String>>((String estado) {
+                return DropdownMenuItem<String>(
                   value: estado,
                   child: Text(estado),
                 );
