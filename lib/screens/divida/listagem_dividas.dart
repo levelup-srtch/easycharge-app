@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bootstrap/flutter_bootstrap.dart';
 
 import '../../components/Drawer/custom_drawer.dart';
 import '../../models/divida.dart';
@@ -28,11 +29,17 @@ class ListaDeDividas extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          ItemCliente(Divida('R\$ 1536,00', 'ABERTA', '03/08/18')),
-          ItemCliente(Divida('R\$ 1065,00', 'ABERTA', '24/07/20')),
-          ItemCliente(Divida('R\$ 100,00', 'ABERTA', '01/02/20')),
+      body: BootstrapRow(
+        children: <BootstrapCol>[
+          BootstrapCol(
+              sizes: 'col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3',
+              child: ItemCliente(Divida('R\$ 1536,00', 'ABERTA', '03/08/18'))),
+          BootstrapCol(
+              sizes: 'col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3',
+              child: ItemCliente(Divida('R\$ 1065,00', 'ABERTA', '24/07/20'))),
+          BootstrapCol(
+              sizes: 'col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3',
+              child: ItemCliente(Divida('R\$ 100,00', 'ABERTA', '01/02/20'))),
         ],
       ),
       floatingActionButton: FloatingActionButton(

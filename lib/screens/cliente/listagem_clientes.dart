@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bootstrap/flutter_bootstrap.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/Drawer/custom_drawer.dart';
 import '../../models/cliente.dart';
-import 'package:easycharge/models/lista_clientes.dart';
+import '../../models/clienteList.dart';
+import 'package:easycharge/state/lista_clientes_state.dart';
 import 'formulario_cliente.dart';
 
 class ListagemClientes extends StatelessWidget {
@@ -12,9 +14,7 @@ class ListagemClientes extends StatelessWidget {
     return Scaffold(
       endDrawer: CustomDrawer(),
       appBar: AppBar(
-        // Barra Inicial
         actions: <Widget>[
-          //Mudando o icone do EndDrawer
           Builder(
             builder: (context) => IconButton(
               icon: const Icon(Icons.dehaze_sharp),
@@ -30,7 +30,7 @@ class ListagemClientes extends StatelessWidget {
           ),
         ),
       ),
-      body: Consumer<ListaDeClientes>(
+      body: Consumer<ListaDeClientesState>(
         builder: (context, listaDeClientes, child) {
           List<Cliente> clientes = listaDeClientes.getClientes();
 
@@ -61,12 +61,15 @@ class ItemCliente extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: const Icon(Icons.person),
-        title: Text(_cliente.nome),
-        subtitle: Text(_cliente.cpf),
-      ),
-    );
+    final ClienteList _clienteList = _cliente.map();
+    return BootstrapCol(
+        sizes: 'col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3',
+        child: Card(
+          child: ListTile(
+            leading: const Icon(Icons.person),
+            title: Text(_cliente.nome),
+            subtitle: Text(_cliente.cpf),
+          ),
+        ));
   }
 }

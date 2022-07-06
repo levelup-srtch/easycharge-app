@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'cliente.dart';
+import '../models/cliente.dart';
 
-class ListaDeClientes extends ChangeNotifier {
+class ListaDeClientesState extends ChangeNotifier {
   List<Cliente> _clientes = [];
 
   List<Cliente> getClientes() => _clientes;
