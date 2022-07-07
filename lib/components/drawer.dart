@@ -33,7 +33,7 @@ Widget build(BuildContext context) {
                         top: 35.0,
                         child: IconButton(
                           alignment: Alignment.centerLeft,
-                          icon: const Icon(Icons.arrow_back_rounded),
+                          icon: const Icon(Icons.keyboard_arrow_left_rounded),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -43,7 +43,7 @@ Widget build(BuildContext context) {
                         left: 35.0,
                         top: 45.0,
                         child: Text(
-                          'Opções',
+                          'Dashboard',
                           style: TextStyle(
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold,
@@ -53,12 +53,12 @@ Widget build(BuildContext context) {
                 ),
               ),
               DrawerTitle(
-                icon: Icons.person_outline_outlined,
+                icon: Icons.people_outline_outlined,
                 text: 'Clientes',
                 page: ListagemDeClientes(),
               ),
               DrawerTitle(
-                icon: Icons.money_outlined,
+                icon: Icons.monetization_on_outlined,
                 text: 'Dividas',
                 page: ListagemDeDividas(),
               )

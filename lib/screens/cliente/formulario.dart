@@ -26,6 +26,24 @@ class _FormularioDeClienteState extends State<FormularioDeCliente> {
       body: Consumer<WizardCadastroDeClienteState>(
         builder: (context, wizardState, child) {
           return Stepper(
+            controlsBuilder: (context, details) {
+              bool ultimoPasso = details.currentStep == 1; // Coloca a quantidade de passos menos 1
+              String rotuloDoUltimoBotao = ultimoPasso ? 'Cadastrar' : 'Avançar';
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: details.onStepCancel,
+                    child: Text('Voltar'),
+                  ),
+                  ElevatedButton(
+                    onPressed: details.onStepContinue,
+                    child: Text(rotuloDoUltimoBotao),
+                  ),
+                ],
+              );
+            },
             currentStep: wizardState.passoAtual,
             onStepContinue: () {
               var funcoes = [_salvaPasso1, _salvaPasso2];
@@ -41,6 +59,7 @@ class _FormularioDeClienteState extends State<FormularioDeCliente> {
               Step(
                 title: Text('Endereço'),
                 content: passoEndereco,
+
               ),
             ],
           );

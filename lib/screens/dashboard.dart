@@ -7,7 +7,8 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        title: Text('Easycharge', textAlign: TextAlign.left),
+        title: const Text('Easycharge',
+            textAlign: TextAlign.left)
         ),
       );
   }
