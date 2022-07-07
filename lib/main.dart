@@ -4,22 +4,26 @@ import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'http/webclient.dart';
 import 'state/listaClientes.dart';
 
-void main() => runApp(MultiProvider(
-  providers: [
-    ChangeNotifierProvider(
-      create: (context) => ListaDeClientes()
-    ),
-    ChangeNotifierProvider(
-      create: (context) => ListaDeDividas()
-    ),
-    ChangeNotifierProvider(
-        create: (context) => WizardCadastroDeClienteState()
-    ),
-  ],
-  child: EasychargeApp(),
-));
+void main() {
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) => ListaDeClientes()
+        ),
+        ChangeNotifierProvider(
+            create: (context) => ListaDeDividas()
+        ),
+        ChangeNotifierProvider(
+            create: (context) => WizardCadastroDeClienteState()
+        ),
+      ],
+      child: EasychargeApp()
+  ));
+  findAll();
+}
 
 class EasychargeApp extends StatelessWidget {
   @override
