@@ -10,7 +10,7 @@ Widget build(BuildContext context) {
     decoration: const BoxDecoration(
         gradient: LinearGradient(
             colors: [Colors.white, Colors.white],
-            begin: Alignment.topCenter,
+            begin: Alignment.topLeft,
             end: Alignment.bottomCenter)),
   );
   return SizedBox(
