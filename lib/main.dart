@@ -1,4 +1,5 @@
 import 'package:easycharge/screens/dashboard.dart';
+import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,9 @@ void main() => runApp(MultiProvider(
         ChangeNotifierProvider(create: (context) => ListaDeFuncionarios()),
         ChangeNotifierProvider(create: (context) => ListaDeClientes()),
         ChangeNotifierProvider(create: (context) => ListaEndereco()),
+        ChangeNotifierProvider(
+            create: (context) => WizardCadastroDeClienteState()
+        ),
       ],
       child: EasychargeApp(),
     ));
