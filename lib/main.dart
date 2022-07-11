@@ -22,7 +22,7 @@ void main() {
       ],
       child: EasychargeApp()
   ));
-  findAll();
+  findAll().then((clientes) => debugPrint('Clientes: $clientes'));
 }
 
 class EasychargeApp extends StatelessWidget {

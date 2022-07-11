@@ -29,6 +29,10 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     }
   }
 
+  set passoAtual(int value) {
+    _passoAtual = value;
+  }
+
   int get quantidadeDeEtapas => _quantidadeDeEtapas;
 
   String get nome => _nome;

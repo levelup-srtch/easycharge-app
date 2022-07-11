@@ -84,6 +84,8 @@ class _FormularioDeClienteState extends State<FormularioDeCliente> {
     var listaDeClientes = Provider.of<ListaDeClientes>(context, listen: false);
     listaDeClientes.adicionaCliente(cliente);
 
+    state.passoAtual = 0;
+
     Navigator.of(context).pop();
   }
 }

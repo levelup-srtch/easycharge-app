@@ -1,8 +1,9 @@
-import 'package:easycharge/models/cliente.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../state/listaClientes.dart';
+import '../../components/messageCenter.dart';
+import '../../components/progress.dart';
+import '../../http/webclient.dart';
+import '../../state/clienteJsonState.dart';
 import 'formulario.dart';
 
 class ListagemDeClientes extends StatelessWidget {
@@ -20,34 +21,68 @@ class ListagemDeClientes extends StatelessWidget {
           }));
         },
       ),
-      body: Consumer<ListaDeClientes>(
-        builder: (context, listaDeClientes, child) {
-          List<Cliente> todosOsClientes = listaDeClientes.getClientes();
-
-          return ListView.builder(
-            itemCount: todosOsClientes.length,
-            itemBuilder: (contextListView, indice) {
-              return ItemCliente(todosOsClientes[indice]);
-            },
-          );
+      body: FutureBuilder<List<ClienteJson>>(
+        future: findAll(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              break;
+            case ConnectionState.waiting:
+              return Progress();
+            case ConnectionState.active:
+              break;
+            case ConnectionState.done:
+              if(snapshot.hasData){
+                final List<ClienteJson> clientes = snapshot.requireData;
+                if (clientes.isNotEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: clientes.length,
+                      itemBuilder: (contextListView, indice) {
+                        return ItemCliente(clientes[indice]);
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                    ),
+                  );
+                }
+              }
+              return MessageCenter('Nenhum cliente foi encontrado!', icon: Icons.warning,);
+          }
+          return MessageCenter('Erro desconhecido!');
         },
       ),
+      // body: Consumer<ListaDeClientes>(
+      //   builder: (context, listaDeClientes, child) {
+      //     List<Cliente> todosOsClientes = listaDeClientes.getClientes();
+      //
+      //     return ListView.builder(
+      //       itemCount: todosOsClientes.length,
+      //       itemBuilder: (contextListView, indice) {
+      //         return ItemCliente(todosOsClientes[indice]);
+      //       },
+      //     );
+      //   },
+      // ),
     );
   }
 }
 
-class ItemCliente extends StatelessWidget {
-  final Cliente cliente;
 
-  ItemCliente(this.cliente);
+class ItemCliente extends StatelessWidget {
+  final ClienteJson _cliente;
+
+  ItemCliente(this._cliente);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         leading: const Icon(Icons.people),
-        title: Text(cliente.nome),
-        subtitle: Text('CPF: ' + cliente.cpf)
+        title: Text(_cliente.nome),
+        subtitle: Text('CPF: ' + _cliente.cpf)
 
       ),
     );
