@@ -12,7 +12,7 @@ class MenuDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(95, 158, 160, 1),
+              color: Colors.teal,
             ),
             child: Text(
               'Easycharge',

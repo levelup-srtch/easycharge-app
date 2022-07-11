@@ -29,12 +29,12 @@ class Formulario extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: details.onStepCancel,
-                    child: Text('Voltar'),
-                  ),
-                  ElevatedButton(
                     onPressed: details.onStepContinue,
                     child: Text(rotuloDoUltimoBotao),
+                  ),
+                  ElevatedButton(
+                    onPressed: details.onStepCancel,
+                    child: Text('Voltar'),
                   ),
                 ],
               );
@@ -123,7 +123,6 @@ class _DadosPessoaisForm extends StatelessWidget {
               FilteringTextInputFormatter.digitsOnly,
               CpfInputFormatter()
             ],
-            validator: (value) => Validator.cpf(value) ? 'CPF inválido' : null,
             maxLength: 14,
             keyboardType: TextInputType.number,
           ),
@@ -239,7 +238,6 @@ class _EnderecoForm extends StatelessWidget {
               return null;
             },
           ),
-
           TextFormField(
             controller: _numeroController,
             decoration: InputDecoration(labelText: 'Número'),
@@ -253,7 +251,6 @@ class _EnderecoForm extends StatelessWidget {
           TextFormField(
             controller: _complementoController,
             decoration: InputDecoration(labelText: 'Complemento'),
-
           ),
           TextFormField(
             controller: _bairroController,
