@@ -1,4 +1,6 @@
-import 'package:easycharge/screens/autenticacao/login.dart';
+import 'package:easycharge/models/dividas/listaDividas.dart';
+import 'package:easycharge/screens/dashboard.dart';
+import 'package:easycharge/screens/divida/dividaLista.dart';
 import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,7 @@ void main() => runApp(MultiProvider(
         ChangeNotifierProvider(create: (context) => ListaDeFuncionarios()),
         ChangeNotifierProvider(create: (context) => ListaDeClientes()),
         ChangeNotifierProvider(create: (context) => ListaEndereco()),
+        ChangeNotifierProvider(create: (context) => ListaDeDividas()),
         ChangeNotifierProvider(
             create: (context) => WizardCadastroDeClienteState()),
       ],
@@ -31,7 +34,7 @@ class EasychargeApp extends StatelessWidget {
         ),
         accentColor: Color.fromARGB(255, 142, 253, 236)
       ),
-      home: Login(),
+      home: Dashboard(),
     );
   }
 }

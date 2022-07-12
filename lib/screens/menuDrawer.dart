@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'autenticacao/login.dart';
 import 'cliente/listaClientes.dart';
+import 'divida/dividaLista.dart';
 
 class MenuDrawer extends StatelessWidget {
   @override
@@ -42,7 +43,7 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ListaClientes(),
+                  builder: (context) => DividaLista(),
                 ),
                 (route) => false,
               );
