@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
-import '../state/clienteJsonState.dart';
+import '../models/cliente.dart';
+import '../models/clienteJson.dart';
 
 class LoggingInterceptor implements InterceptorContract {
   @override
@@ -26,12 +27,14 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
+final Client client = InterceptedClient.build(
+    interceptors: [LoggingInterceptor()]
+);
+
 Future<List<ClienteJson>> findAll() async {
-  Client client = InterceptedClient.build(
-      interceptors: [LoggingInterceptor()]
-  );
   final Response response =
-  await client.get(Uri.http('localhost:8080', '/api/clientes')).timeout(Duration(seconds: 5));
+  await client.get(Uri.http('10.0.0.157:8080', '/api/clientes')).timeout(Duration(seconds: 5));
+  // await client.get(Uri.parse('http://10.0.2.2:8080/api/clientes'));
   // ignore: prefer_interpolation_to_compose_strings
   final List<dynamic> decodedJson = jsonDecode('[' + response.body + ']')[0]['content'];
   final List<ClienteJson> clientes = [];
@@ -48,6 +51,22 @@ Future<List<ClienteJson>> findAll() async {
     );
     clientes.add(json);
   }
-  
+
   return clientes;
+}
+
+Future<ClienteJson> cadastroCliente(Cliente cliente) async {
+
+  final String clienteJson = jsonEncode(cliente.mapJson());
+
+  final Response response = await client.post(
+      Uri.http('10.0.0.157:8080', '/api/clientes'),
+      headers: {'Content-type': 'application/json'},
+      body: clienteJson);
+
+  Map<String, dynamic> json = jsonDecode(response.body);
+
+  debugPrint(response.body);
+  return ClienteJson(json['id'], json['nome'], json['cpf'], json['email'], json['telefone'],
+      json['local'], json['renda'], json['status']);
 }

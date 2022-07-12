@@ -2,15 +2,19 @@ import 'package:easycharge/models/cliente.dart';
 import 'package:flutter/material.dart';
 
 class WizardCadastroDeClienteState extends ChangeNotifier {
-
   String _nome = '';
   String _cpf = '';
-  String _email = '';
   String _telefone = '';
-  String _cargo = '';
+  String _email = '';
   String _rua = '';
-  String _bairro = '';
   String _numero = '';
+  String _complemento = '';
+  String _bairro = '';
+  String _cidade = '';
+  String _estado = '';
+  String _profissao = '';
+  String _renda = '';
+  String _status = '';
 
   int _passoAtual = 0;
   int _quantidadeDeEtapas = 2;
@@ -29,10 +33,6 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     }
   }
 
-  set passoAtual(int value) {
-    _passoAtual = value;
-  }
-
   int get quantidadeDeEtapas => _quantidadeDeEtapas;
 
   String get nome => _nome;
@@ -47,22 +47,16 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     _cpf = value;
   }
 
-  String get email => _email;
-
-  set email(String value) {
-    _email = value;
-  }
-
   String get telefone => _telefone;
 
   set telefone(String value) {
     _telefone = value;
   }
 
-  String get cargo => _cargo;
+  String get email => _email;
 
-  set cargo(String value) {
-    _cargo = value;
+  set email(String value) {
+    _email = value;
   }
 
   String get rua => _rua;
@@ -71,28 +65,73 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     _rua = value;
   }
 
-  String get bairro => _bairro;
-
-  set bairro(String value) {
-    _bairro = value;
-  }
-
   String get numero => _numero;
 
   set numero(String value) {
     _numero = value;
   }
 
+  String get complemento => _complemento;
+
+  set complemento(String value) {
+    _complemento = value;
+  }
+
+  String get bairro => _bairro;
+
+  set bairro(String value) {
+    _bairro = value;
+  }
+
+  String get cidade => _cidade;
+
+  set cidade(String value) {
+    _cidade = value;
+  }
+
+  String get estado => _estado;
+
+  set estado(String value) {
+    _estado = value;
+  }
+
+  String get profissao => _profissao;
+
+  set profissao(String value) {
+    _profissao = value;
+  }
+
+  String get renda => _renda;
+
+  set renda(String value) {
+    _renda = value;
+  }
+
+  String get status => _status;
+
+  set status(String value) {
+    _status = value;
+  }
+
   Cliente criaCliente() {
-    Cliente cliente = Cliente(_nome, _cpf, _email, _telefone, _cargo, _rua, _bairro, _numero);
-    _nome = '';
+    Cliente cliente = Cliente(_nome, _cpf, _telefone, _email, _rua, _numero,
+        _bairro, _cidade, _estado, _profissao, _renda);
+    if(_complemento.isNotEmpty){
+      cliente.complemento = _complemento;
+    }
     _cpf = '';
-    _email = '';
+    _nome = '';
     _telefone = '';
-    _cargo = '';
+    _email = '';
     _rua = '';
-    _bairro = '';
     _numero = '';
+    _complemento = '';
+    _bairro = '';
+    _cidade = '';
+    _estado = '';
+    _profissao = '';
+    _renda = '';
+    _status = '';
 
     return cliente;
   }

@@ -1,6 +1,6 @@
 class ClienteJson {
 
-  final int _id;
+  int _id;
   String _nome;
   String _cpf;
   String _email;
@@ -9,7 +9,7 @@ class ClienteJson {
   double _renda;
   String _status;
 
-  ClienteJson(this._id, this._nome, this._cpf,this._email, this._telefone, this._local,
+  ClienteJson(this._id, this._nome, this._cpf, this._email, this._telefone, this._local,
       this._renda, this._status);
 
   String get status => _status;
@@ -42,6 +42,7 @@ class ClienteJson {
     _cpf = value;
   }
 
+
   String get email => _email;
 
   set email(String value) {
@@ -55,4 +56,7 @@ class ClienteJson {
   }
 
   int get id => _id;
+
+
+
 }

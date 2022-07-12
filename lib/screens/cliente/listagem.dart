@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../components/messageCenter.dart';
 import '../../components/progress.dart';
 import '../../http/webclient.dart';
-import '../../state/clienteJsonState.dart';
+import '../../models/clienteJson.dart';
 import 'formulario.dart';
 
 class ListagemDeClientes extends StatelessWidget {
@@ -80,9 +80,14 @@ class ItemCliente extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: const Icon(Icons.people),
+        leading: const Icon(Icons.person_outlined),
         title: Text(_cliente.nome),
-        subtitle: Text('CPF: ' + _cliente.cpf)
+        subtitle: Text('CPF: ' + _cliente.cpf),
+        onTap: (){
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => FormularioDeCliente())
+          );
+        },
 
       ),
     );
