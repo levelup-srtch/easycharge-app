@@ -1,13 +1,15 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:easycharge/components/inputForm.dart';
+import 'package:easycharge/http/webclient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flux_validator_dart/flux_validator_dart.dart';
 import 'package:provider/provider.dart';
 
+import 'package:easycharge/components/inputForm.dart';
 import '../../models/cliente.dart';
 import '../../state/lista_clientes_state.dart';
 import '../../state/wizard_cadastro_de_clientes_state.dart';
+import 'listagem_clientes.dart';
 
 class FormularioCliente extends StatelessWidget {
   var passoDadosPessoais = _DadosPessoaisForm();
@@ -20,20 +22,53 @@ class FormularioCliente extends StatelessWidget {
       body: Consumer<WizardCadastroDeClienteState>(
         builder: (context, wizardState, child) {
           return Stepper(
+            controlsBuilder: (context, details) {
+              bool ultimoPasso = details.currentStep == 1;
+              String rotuloDoUltimoBotao =
+                  ultimoPasso ? 'Cadastrar' : 'Avançar';
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: details.onStepCancel,
+                    child: Text('Voltar'),
+                  ),
+                  ElevatedButton(
+                    onPressed: details.onStepContinue,
+                    child: Text(rotuloDoUltimoBotao),
+                  ),
+                ],
+              );
+            },
+            type: StepperType.horizontal,
             currentStep: wizardState.passoAtual,
             onStepContinue: () {
               var funcoes = [_salvaPasso1, _salvaPasso2];
 
               funcoes[wizardState.passoAtual](context);
+              // Cliente cliente = Cliente(
+              //     'Caio',
+              //     '06654939166',
+              //     '61995532410',
+              //     'caio@gmail.com',
+              //     'rua d',
+              //     '45',
+              //     'jardins',
+              //     'brasilia',
+              //     'DF',
+              //     'programador',
+              //     '16551');
+              // cadastroCliente(cliente);
             },
             onStepCancel: () => wizardState.volta(),
             steps: [
               Step(
-                title: Text('Dados pessoais'),
+                title: const Text('Dados pessoais'),
                 content: passoDadosPessoais,
               ),
               Step(
-                title: Text('Endereco'),
+                title: const Text('Endereco'),
                 content: passoEndereco,
               ),
             ],
@@ -47,7 +82,7 @@ class FormularioCliente extends StatelessWidget {
     if (passoDadosPessoais.isValido()) {
       WizardCadastroDeClienteState state =
           Provider.of<WizardCadastroDeClienteState>(context, listen: false);
-      passoDadosPessoais.armazenaDadosNoWizard(context);
+      passoDadosPessoais.armazenaDadosNoWizard(state);
 
       state.avanca();
     }
@@ -57,14 +92,18 @@ class FormularioCliente extends StatelessWidget {
     if (passoEndereco.isValido()) {
       WizardCadastroDeClienteState state =
           Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+      passoEndereco.armazenaDadosNoWizard(state);
       Cliente cliente = state.criaCliente();
 
+      cadastroCliente(cliente);
       var listaDeClientes =
           Provider.of<ListaDeClientesState>(context, listen: false);
       listaDeClientes.adicionaCliente(cliente);
 
       state.volta();
-      Navigator.of(context).pop();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => ListagemClientes()),
+          (route) => false);
     }
   }
 }
@@ -176,9 +215,7 @@ class _DadosPessoaisForm extends StatelessWidget {
     );
   }
 
-  void armazenaDadosNoWizard(context) {
-    var state =
-        Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+  void armazenaDadosNoWizard(state) {
     state.cpf = _cpfController.text;
     state.nome = _nomeController.text;
     state.email = _emailController.text;
@@ -270,24 +307,11 @@ class _EnderecoForm extends StatelessWidget {
               formatters: [],
               keyboardType: TextInputType.text,
             ),
-            // DropdownButtonFormField(
-            //   value: 'One',
-            //   icon: const Icon(Icons.arrow_downward),
-            //   elevation: 16,
-            //   style: const TextStyle(color: Colors.deepPurple),
-            //   onChanged: (String? newValue) {
-            //   },
-            //   items: Estados.listaEstadosSigla
-            //       .map<DropdownMenuItem<String>>((String value) {
-            //     return DropdownMenuItem<String>(
-            //       value: value,
-            //       child: Text(value),
-            //     );
-            //   }).toList(),)
             DropdownButtonFormField(
-              hint: Text('Selecione...'),
+              hint: Text('Estado'),
               isExpanded: true,
-              items: Estados.listaEstadosSigla.map<DropdownMenuItem<String>>((String estado) {
+              items: Estados.listaEstadosSigla
+                  .map<DropdownMenuItem<String>>((String estado) {
                 return DropdownMenuItem<String>(
                   value: estado,
                   child: Text(estado),
@@ -299,7 +323,7 @@ class _EnderecoForm extends StatelessWidget {
               },
               validator: (value) {
                 if (value == null) {
-                  return 'selecione um estado!';
+                  return 'Selecione um estado!';
                 }
                 return null;
               },
@@ -310,9 +334,7 @@ class _EnderecoForm extends StatelessWidget {
     );
   }
 
-  void armazenaDadosNoWizard(context) {
-    var state =
-        Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+  void armazenaDadosNoWizard(state) {
     state.rua = _ruaController.text;
     state.complemento = _complementoController.text;
     state.bairro = _bairroController.text;

@@ -114,8 +114,11 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
   }
 
   Cliente criaCliente() {
-    Cliente cliente = Cliente(_nome, _cpf,  _telefone, _email, _rua, _numero,
-        _complemento, _bairro, _cidade, _estado, _profissao, _renda, _status);
+    Cliente cliente = Cliente(_nome, _cpf, _telefone, _email, _rua, _numero,
+        _bairro, _cidade, _estado, _profissao, _renda);
+    if(_complemento.isNotEmpty){
+      cliente.complemento = _complemento;
+    }
     _cpf = '';
     _nome = '';
     _telefone = '';

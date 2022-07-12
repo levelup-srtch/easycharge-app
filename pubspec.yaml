@@ -38,6 +38,9 @@ dependencies:
   brasil_fields: ^1.4.5
   flutter_bootstrap: ^2.0.0
   flux_validator_dart: ^2.0.0
+  sqflite: ^2.0.3
+  http: ^0.13.4
+  http_interceptor: ^1.0.2
 
 dev_dependencies:
   flutter_test:
