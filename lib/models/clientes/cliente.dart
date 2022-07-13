@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Cliente extends ChangeNotifier{
 
-  double _id;
+  int _id;
   String _nome;
   String _cpf;
   String _telefone;
@@ -17,7 +17,7 @@ class Cliente extends ChangeNotifier{
   String _estado;
 
 
-  double get id => _id;
+  int get id => _id;
 
   String get nome => _nome;
 
@@ -34,7 +34,7 @@ class Cliente extends ChangeNotifier{
   String get status => _status;
 
 
-  set id(double value) {
+  set id(int value) {
     _id = value;
   }
 

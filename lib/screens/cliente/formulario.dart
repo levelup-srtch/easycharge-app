@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flux_validator_dart/flux_validator_dart.dart';
 import 'package:provider/provider.dart';
 
+import '../../http/webCliente.dart';
 import '../../models/clientes/cliente.dart';
 import '../../models/clientes/listaClientes.dart';
 import '../../state/wizard_cadastro_cliente.dart';
+import 'listaClientes.dart';
 
 class Formulario extends StatelessWidget {
   var passoDadosPessoais = _DadosPessoaisForm();
@@ -71,7 +73,7 @@ class Formulario extends StatelessWidget {
     if (passoDadosPessoais.isValido()) {
       WizardCadastroDeClienteState state =
           Provider.of<WizardCadastroDeClienteState>(context, listen: false);
-      passoDadosPessoais.armazenaDadosNoWizard(context);
+      passoDadosPessoais.armazenaDadosNoWizard(state);
 
       state.avanca();
     }
@@ -80,12 +82,17 @@ class Formulario extends StatelessWidget {
   void _salvaPasso2(BuildContext context) {
     WizardCadastroDeClienteState state =
         Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+    passoEndereco.armazenaDadosNoWizard(state);
     Cliente cliente = state.criaCliente();
+
+    cadastroCliente(cliente);
 
     var listaDeClientes = Provider.of<ListaDeClientes>(context, listen: false);
     listaDeClientes.adicionaCliente(cliente);
 
-    Navigator.of(context).pop();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => ListaClientes()),
+            (route) => false);
   }
 }
 

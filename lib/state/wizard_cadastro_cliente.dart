@@ -5,7 +5,7 @@ import '../models/clientes/cliente.dart';
 
 class WizardCadastroDeClienteState extends ChangeNotifier {
 
-  double _id = 0;
+  int _id = 0;
    String _nome = '';
    String _cpf = '';
    String _telefone = '';
@@ -39,9 +39,9 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
   int get quantidadeDeEtapas => _quantidadeDeEtapas;
 
 
-  double get id => _id;
+  int get id => _id;
 
-  set id(double value) {
+  set id(int value) {
     _id = value;
   }
 

@@ -19,16 +19,14 @@ class LoggingInterceptor implements InterceptorContract {
 }
 
 Future<List<Cliente>> buscartodos() async {
+  final List<Cliente> clientes = [];
   Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
   final Response response = await client
-      .get(Uri.http('localhost:8080', '/api/clientes'))
+      .get(Uri.http('172.19.144.1:8080', '/api/clientes'))
       .timeout(Duration(seconds: 5));
-  // ignore: prefer_interpolation_to_compose_strings
   final List<dynamic> decodedJson = jsonDecode(response.body);
-  final List<Cliente> clientes = [];
 
   for (Map<String, dynamic> cliente in decodedJson) {
-
     final Cliente json = Cliente(
       cliente['id'],
       cliente['nome'],
@@ -38,7 +36,7 @@ Future<List<Cliente>> buscartodos() async {
       cliente['profissao'],
       cliente['renda'],
       cliente['status'],
-       cliente['endereco']['rua'],
+      cliente['endereco']['rua'],
       cliente['endereco']['numero'],
       cliente['endereco']['bairro'],
       cliente['endereco']['cidade'],
@@ -57,13 +55,13 @@ Future<Cliente> cadastroCliente(Cliente cliente) async {
   final String clienteJson = jsonEncode(cliente.mapJson());
 
   final Response response = await client.post(
-      Uri.http('10.0.3.252:8080', '/api/clientes'),
-      headers: {'Content-type': 'application/json'},
-      body: clienteJson);
+    Uri.http('172.19.144.1:8080', '/api/clientes'),
+    headers: {'Content-type': 'application/json'},
+    body: clienteJson,
+  );
 
   Map<String, dynamic> json = jsonDecode(response.body);
 
-  debugPrint(response.body);
   return Cliente(
     json['id'],
     json['nome'],
