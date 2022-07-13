@@ -26,7 +26,9 @@ Future<List<Cliente>> buscartodos() async {
   // ignore: prefer_interpolation_to_compose_strings
   final List<dynamic> decodedJson = jsonDecode(response.body);
   final List<Cliente> clientes = [];
+
   for (Map<String, dynamic> cliente in decodedJson) {
+
     final Cliente json = Cliente(
       cliente['id'],
       cliente['nome'],
@@ -36,12 +38,11 @@ Future<List<Cliente>> buscartodos() async {
       cliente['profissao'],
       cliente['renda'],
       cliente['status'],
-      cliente['rua'],
-      cliente['numero'],
-      cliente['complemento'],
-      cliente['bairro'],
-      cliente['cidade'],
-      cliente['estado'],
+       cliente['endereco']['rua'],
+      cliente['endereco']['numero'],
+      cliente['endereco']['bairro'],
+      cliente['endereco']['cidade'],
+      cliente['endereco']['estado'],
     );
     clientes.add(json);
   }
@@ -77,6 +78,5 @@ Future<Cliente> cadastroCliente(Cliente cliente) async {
     json['complemento'],
     json['bairro'],
     json['cidade'],
-    json['estado'],
   );
 }

@@ -15,7 +15,6 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
    String _status = '';
    String _rua = '';
    String _numero = '';
-   String _complemento = '';
    String _bairro = '';
    String _cidade = '';
    String _estado = '';
@@ -103,12 +102,6 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     _numero = value;
   }
 
-  String get complemento => _complemento;
-
-  set complemento(String value) {
-    _complemento = value;
-  }
-
   String get bairro => _bairro;
 
   set bairro(String value) {
@@ -128,7 +121,7 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
   }
 
   Cliente criaCliente() {
-    Cliente cliente = Cliente(_id,_nome, _cpf,_telefone,_email,_profissao,_renda,_status,_rua,_numero,_complemento,_bairro,_cidade,_estado,);
+    Cliente cliente = Cliente(_id,_nome, _cpf,_telefone,_email,_profissao,_renda,_status,_rua,_numero,_bairro,_cidade,_estado,);
     _id = 0;
     _nome = '';
     _cpf = '';
@@ -139,11 +132,11 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     _status='';
     _rua='';
     _numero='';
-    _complemento='';
     _bairro='';
     _cidade='';
     _estado='';
 
     return cliente;
   }
+
 }

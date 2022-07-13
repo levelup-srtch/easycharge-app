@@ -12,7 +12,6 @@ class Cliente extends ChangeNotifier{
   String _status;
   String _rua;
   String _numero;
-  String _complemento ;
   String _bairro;
   String _cidade;
   String _estado;
@@ -92,11 +91,6 @@ class Cliente extends ChangeNotifier{
     _bairro = value;
   }
 
-  String get complemento => _complemento;
-
-  set complemento(String value) {
-    _complemento = value;
-  }
 
   String get numero => _numero;
 
@@ -121,7 +115,7 @@ class Cliente extends ChangeNotifier{
       this._status,
       this._rua,
       this._numero,
-      this._complemento,
+
       this._bairro,
       this._cidade,
       this._estado,
@@ -140,7 +134,6 @@ class Cliente extends ChangeNotifier{
       'estado': _estado,
       'profissao': _profissao,
       'renda': _renda,
-      'complemento': _complemento
     };
   }
 }

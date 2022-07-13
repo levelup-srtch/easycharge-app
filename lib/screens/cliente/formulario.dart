@@ -305,7 +305,6 @@ class _EnderecoForm extends StatelessWidget {
         Provider.of<WizardCadastroDeClienteState>(context, listen: false);
     state.rua = _ruaController.text;
     state.numero = _numeroController.text;
-    state.complemento = _complementoController.text;
     state.bairro = _bairroController.text;
     state.cidade = _cidadeController.text;
     state.estado = _estadoController.text;

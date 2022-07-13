@@ -1,9 +1,8 @@
 import 'package:easycharge/models/clientes/cliente.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../../components/mensagens.dart';
 import '../../http/webCliente.dart';
-import '../../models/clientes/listaClientes.dart';
 import '../menuDrawer.dart';
 import 'formulario.dart';
 
@@ -28,35 +27,55 @@ class ListaClientes extends StatelessWidget {
           icon: Icon(Icons.person_rounded),
         ),
         body: FutureBuilder<List<Cliente>>(
-          future: buscartodos(),
+        future: buscartodos(),
           builder: (context, snapshot) {
-            return Consumer<ListaDeClientes>(
-                builder: (context, listaDeClientes, child) {
-              List<Cliente> todosClientes = listaDeClientes.getClientes();
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                break;
+              case ConnectionState.waiting:
 
-              return ListView.builder(
-                  itemCount: todosClientes.length,
-                  itemBuilder: (contextListView, index) {
-                    return ItemCliente(todosClientes[index]);
-                  });
-            });
+              case ConnectionState.active:
+                break;
+              case ConnectionState.done:
+                if(snapshot.hasData){
+                  final List<Cliente> clientes = snapshot.requireData;
+                  if (clientes.isNotEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: clientes.length,
+                        itemBuilder: (contextListView, indice) {
+                          return ItemCliente(clientes[indice]);
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
+                      ),
+                    );
+                  }
+                }
+            }
+            return CenteredMessage('Erro desconhecido!');
           },
-        ));
-  }
-}
+        ),
 
-class ItemCliente extends StatelessWidget {
+
+    );
+    }
+  }
+
+  class ItemCliente extends StatelessWidget {
   final Cliente cliente;
 
   ItemCliente(this.cliente);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-          leading: const Icon(Icons.people),
-          title: Text(cliente.nome),
-          subtitle: Text('CPF: ' + cliente.cpf)),
-    );
+  return Card(
+  child: ListTile(
+  leading: const Icon(Icons.people),
+  title: Text(cliente.nome),
+  subtitle: Text('CPF: ' + cliente.cpf)),
+  );
   }
-}
+  }
