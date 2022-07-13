@@ -1,19 +1,18 @@
-import 'package:easycharge/models/cliente.dart';
+class DividaJson {
 
-class Divida {
-
-  String _valor;
+  double _valor;
   String _dataAbertura;
   String _dataQuitacao;
   late String _statusDivida;
   String _descricaoQuitacao;
-  String _cliente;
+  int _cliente;
 
-  Divida(this._valor, this._dataAbertura, this._dataQuitacao, this._descricaoQuitacao, this._cliente);
+  DividaJson(this._valor, this._dataAbertura, this._dataQuitacao, this._statusDivida, this._descricaoQuitacao, this._cliente);
 
-  String get cliente => _cliente;
 
-  set cliente(String value) {
+  int get cliente => _cliente;
+
+  set cliente(int value) {
     _cliente = value;
   }
 
@@ -41,9 +40,9 @@ class Divida {
     _dataAbertura = value;
   }
 
-  String get valor => _valor;
+  double get valor => _valor;
 
-  set valor(String value) {
+  set valor(double value) {
     _valor = value;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:easycharge/http/webclient.dart';
+import 'package:easycharge/http/cliente_webclient.dart';
 import 'package:easycharge/screens/cliente/listagem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

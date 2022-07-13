@@ -47,7 +47,7 @@ class ItemDivida extends StatelessWidget {
     return Card(
       child: ListTile(
           leading: const Icon(Icons.people),
-          title: Text(divida.nomeCliente),
+          title: Text(divida.cliente),
           subtitle: Text('Valor: ' + divida.valor)
       ),
     );

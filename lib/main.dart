@@ -4,7 +4,8 @@ import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'http/webclient.dart';
+import 'http/cliente_webclient.dart';
+import 'http/divida_webclient.dart';
 import 'state/listaClientes.dart';
 
 void main() {
@@ -23,7 +24,7 @@ void main() {
       child: EasychargeApp()
   ));
   // findAll().then((clientes) => debugPrint('Clientes: $clientes'));
-
+  findAllDividas();
 }
 
 class EasychargeApp extends StatelessWidget {

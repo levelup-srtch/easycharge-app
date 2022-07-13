@@ -1,5 +1,6 @@
 import 'package:easycharge/components/title.dart';
 import 'package:easycharge/screens/cliente/listagem.dart';
+import 'package:easycharge/screens/divida/formulario.dart';
 import 'package:easycharge/screens/divida/listagem.dart';
 import 'package:flutter/material.dart';
 
