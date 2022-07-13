@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class Endereco extends ChangeNotifier{
 
-  String _rua;
-  String _numero;
-  String _complemento;
-  String _bairro;
-  String _cidade;
-  String _estado;
+  String _rua = '';
+  String _numero = '';
+  String _complemento ='';
+  String _bairro = '';
+  String _cidade = '';
+  String _estado ='';
 
   String get rua => _rua;
 

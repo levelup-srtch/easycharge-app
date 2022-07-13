@@ -2,6 +2,7 @@ import 'package:easycharge/models/clientes/cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../http/webCliente.dart';
 import '../../models/clientes/listaClientes.dart';
 import '../menuDrawer.dart';
 import 'formulario.dart';
@@ -10,33 +11,37 @@ class ListaClientes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Clientes'),
-      ),
-      drawer: MenuDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Formulario(),
-            ),
-          );
-        },
-        label: Text('Novo Clinete'),
-        icon: Icon(Icons.person_rounded),
-      ),
-      body:
-          Consumer<ListaDeClientes>(builder: (context, listaDeClientes, child) {
-        List<Cliente> todosClientes = listaDeClientes.getClientes();
+        appBar: AppBar(
+          title: Text('Clientes'),
+        ),
+        drawer: MenuDrawer(),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Formulario(),
+              ),
+            );
+          },
+          label: Text('Novo Clinete'),
+          icon: Icon(Icons.person_rounded),
+        ),
+        body: FutureBuilder<List<Cliente>>(
+          future: buscartodos(),
+          builder: (context, snapshot) {
+            return Consumer<ListaDeClientes>(
+                builder: (context, listaDeClientes, child) {
+              List<Cliente> todosClientes = listaDeClientes.getClientes();
 
-        return ListView.builder(
-            itemCount: todosClientes.length,
-            itemBuilder: (contextListView, index) {
-              return ItemCliente(todosClientes[index]);
+              return ListView.builder(
+                  itemCount: todosClientes.length,
+                  itemBuilder: (contextListView, index) {
+                    return ItemCliente(todosClientes[index]);
+                  });
             });
-      }),
-    );
+          },
+        ));
   }
 }
 

@@ -5,19 +5,19 @@ import '../models/clientes/endereco.dart';
 
 class WizardCadastroDeClienteState extends ChangeNotifier {
 
-  String _nome;
-  String _cpf;
-  String _telefone;
-  String _email;
-  String _profissao;
-  String _renda;
-  String _status;
-  String _rua;
-  String _numero;
-  String _complemento;
-  String _bairro;
-  String _cidade;
-  String _estado;
+   String _nome = '';
+   String _cpf = '';
+   String _telefone = '';
+   String _email = '';
+   String _profissao = '';
+   double _renda = 0;
+   String _status = '';
+   String _rua = '';
+   String _numero = '';
+   String _complemento = '';
+   String _bairro = '';
+   String _cidade = '';
+   String _estado = '';
 
   int _passoAtual = 0;
   int _quantidadeDeEtapas = 2;
@@ -70,9 +70,9 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     _profissao = value;
   }
 
-  String get renda => _renda;
+   double get renda => _renda;
 
-  set renda(String value) {
+  set renda(double value) {
     _renda = value;
   }
 
@@ -126,7 +126,7 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
     _telefone ='';
     _email= '';
     _profissao= '';
-    _renda='';
+    _renda=0;
     _status='';
     _rua='';
     _numero='';

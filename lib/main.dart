@@ -1,15 +1,17 @@
 import 'package:easycharge/models/dividas/listaDividas.dart';
 import 'package:easycharge/screens/dashboard.dart';
-import 'package:easycharge/screens/divida/dividaLista.dart';
 import 'package:easycharge/state/wizard_cadastro_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'http/webCliente.dart';
 import 'models/clientes/listaClientes.dart';
 import 'models/clientes/listaEndereco.dart';
 import 'models/funcionarios/listaFuncionario.dart';
 
-void main() => runApp(MultiProvider(
+void main() {
+  buscartodos();
+  runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ListaDeFuncionarios()),
         ChangeNotifierProvider(create: (context) => ListaDeClientes()),
@@ -20,6 +22,7 @@ void main() => runApp(MultiProvider(
       ],
       child: EasychargeApp(),
     ));
+}
 
 class EasychargeApp extends StatelessWidget {
   @override

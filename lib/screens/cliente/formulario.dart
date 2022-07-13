@@ -25,18 +25,22 @@ class Formulario extends StatelessWidget {
               String rotuloDoUltimoBotao =
                   ultimoPasso ? 'Cadastrar' : 'Avançar';
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: details.onStepContinue,
-                    child: Text(rotuloDoUltimoBotao),
-                  ),
-                  ElevatedButton(
-                    onPressed: details.onStepCancel,
-                    child: Text('Voltar'),
-                  ),
-                ],
+              return Padding(
+                padding: EdgeInsets.only(top: 45),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      child: Text(rotuloDoUltimoBotao),
+                    ),
+                    ElevatedButton(
+                      onPressed: details.onStepCancel,
+                      child: Text('Voltar'),
+                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)) ,
+                    ),
+                  ],
+                ),
               );
             },
             currentStep: wizardState.passoAtual,
@@ -50,6 +54,7 @@ class Formulario extends StatelessWidget {
               Step(
                 title: Text('Dados Pessoais'),
                 content: passoDadosPessoais,
+                state: StepState.complete
               ),
               Step(
                 title: Text('Endereço'),
@@ -181,8 +186,8 @@ class _DadosPessoaisForm extends StatelessWidget {
                 value: status,
               );
             }).toList(),
-            onChanged: (String novoStatus) {
-              _statusController.text = novoStatus;
+            onChanged: (String ) {
+              _statusController.text ;
             },
             validator: (value) {
               if (value == null) return 'Selecione um Status!';
@@ -203,7 +208,7 @@ class _DadosPessoaisForm extends StatelessWidget {
     state.telefone = _telefoneController.text;
     state.email = _emailController.text;
     state.profissao = _profissaoController.text;
-    state.renda = _rendaController.text;
+    state.renda = double.parse(_rendaController.text) ;
     state.status = _statusController.text;
   }
 
@@ -281,8 +286,8 @@ class _EnderecoForm extends StatelessWidget {
                 value: estado,
               );
             }).toList(),
-            onChanged: (String novoEstadoSelecionado) {
-              _estadoController.text = novoEstadoSelecionado;
+            onChanged: (String) {
+              _estadoController.text ;
             },
             validator: (value) {
               if (value == null) return 'Selecione um estado!';

@@ -62,19 +62,19 @@ class MenuDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Sair'),
-            onTap: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Login(),
-                ),
-                    (route) => false,
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.logout),
+          //   title: Text('Sair'),
+          //   onTap: () {
+          //     Navigator.pushAndRemoveUntil(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => Login(),
+          //       ),
+          //           (route) => false,
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

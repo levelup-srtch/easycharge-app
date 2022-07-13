@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'endereco.dart';
-
 class Cliente extends ChangeNotifier{
 
 
@@ -10,11 +8,11 @@ class Cliente extends ChangeNotifier{
   String _telefone;
   String _email;
   String _profissao;
-  String _renda;
+  double _renda;
   String _status;
   String _rua;
   String _numero;
-  String _complemento;
+  String? _complemento ;
   String _bairro;
   String _cidade;
   String _estado;
@@ -30,7 +28,7 @@ class Cliente extends ChangeNotifier{
 
   String get profissao => _profissao;
 
-  String get renda => _renda;
+  double get renda => _renda;
 
   String get status => _status;
 
@@ -39,7 +37,7 @@ class Cliente extends ChangeNotifier{
     notifyListeners();
   }
 
-  set renda(String value) {
+  set renda(double value) {
     _renda = value;
     notifyListeners();
   }
@@ -87,9 +85,9 @@ class Cliente extends ChangeNotifier{
     _bairro = value;
   }
 
-  String get complemento => _complemento;
+  String? get complemento => _complemento;
 
-  set complemento(String value) {
+  set complemento(String? value) {
     _complemento = value;
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Funcionario extends ChangeNotifier{
 
-  int _id;
+  int _id ;
   String _nome;
   String _email;
   String _cpf;
@@ -61,4 +61,7 @@ class Funcionario extends ChangeNotifier{
     _nome = value;
     notifyListeners();
   }
+
+  Funcionario(this._id, this._nome, this._email, this._cpf, this._celular,
+      this._cargo, this._status);
 }
