@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../models/clientes/cliente.dart';
-import '../models/clientes/endereco.dart';
+
 
 class WizardCadastroDeClienteState extends ChangeNotifier {
 
+  double _id = 0;
    String _nome = '';
    String _cpf = '';
    String _telefone = '';
@@ -37,6 +38,13 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
   }
 
   int get quantidadeDeEtapas => _quantidadeDeEtapas;
+
+
+  double get id => _id;
+
+  set id(double value) {
+    _id = value;
+  }
 
   String get nome => _nome;
 
@@ -120,7 +128,8 @@ class WizardCadastroDeClienteState extends ChangeNotifier {
   }
 
   Cliente criaCliente() {
-    Cliente cliente = Cliente(_nome, _cpf,_telefone,_email,_profissao,_renda,_status,_rua,_numero,_complemento,_bairro,_cidade,_estado);
+    Cliente cliente = Cliente(_id,_nome, _cpf,_telefone,_email,_profissao,_renda,_status,_rua,_numero,_complemento,_bairro,_cidade,_estado,);
+    _id = 0;
     _nome = '';
     _cpf = '';
     _telefone ='';

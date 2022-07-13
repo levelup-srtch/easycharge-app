@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Cliente extends ChangeNotifier{
 
-
+  double _id;
   String _nome;
   String _cpf;
   String _telefone;
@@ -12,11 +12,13 @@ class Cliente extends ChangeNotifier{
   String _status;
   String _rua;
   String _numero;
-  String? _complemento ;
+  String _complemento ;
   String _bairro;
   String _cidade;
   String _estado;
 
+
+  double get id => _id;
 
   String get nome => _nome;
 
@@ -31,6 +33,11 @@ class Cliente extends ChangeNotifier{
   double get renda => _renda;
 
   String get status => _status;
+
+
+  set id(double value) {
+    _id = value;
+  }
 
   set status(String value) {
     _status = value;
@@ -85,9 +92,9 @@ class Cliente extends ChangeNotifier{
     _bairro = value;
   }
 
-  String? get complemento => _complemento;
+  String get complemento => _complemento;
 
-  set complemento(String? value) {
+  set complemento(String value) {
     _complemento = value;
   }
 
@@ -104,6 +111,7 @@ class Cliente extends ChangeNotifier{
   }
 
   Cliente(
+      this._id,
       this._nome,
       this._cpf,
       this._telefone,
@@ -118,5 +126,21 @@ class Cliente extends ChangeNotifier{
       this._cidade,
       this._estado,
 
-      );
+  );
+  Map<String, dynamic> mapJson() {
+    return {
+      'nome': _nome,
+      'cpf': _cpf,
+      'telefone': _telefone,
+      'email': _email,
+      'rua': _rua,
+      'numero': _numero,
+      'bairro': _bairro,
+      'cidade': _cidade,
+      'estado': _estado,
+      'profissao': _profissao,
+      'renda': _renda,
+      'complemento': _complemento
+    };
+  }
 }
