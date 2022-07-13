@@ -39,7 +39,9 @@ class Formulario extends StatelessWidget {
                     ElevatedButton(
                       onPressed: details.onStepCancel,
                       child: Text('Voltar'),
-                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)) ,
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.red)),
                     ),
                   ],
                 ),
@@ -54,10 +56,9 @@ class Formulario extends StatelessWidget {
             onStepCancel: () => wizardState.volta(),
             steps: [
               Step(
-                title: Text('Dados Pessoais'),
-                content: passoDadosPessoais,
-                state: StepState.complete
-              ),
+                  title: Text('Dados Pessoais'),
+                  content: passoDadosPessoais,
+                  state: StepState.complete),
               Step(
                 title: Text('Endereço'),
                 content: passoEndereco,
@@ -92,7 +93,7 @@ class Formulario extends StatelessWidget {
 
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => ListaClientes()),
-            (route) => false);
+        (route) => false);
   }
 }
 
@@ -184,38 +185,18 @@ class _DadosPessoaisForm extends StatelessWidget {
             maxLength: 14,
             keyboardType: TextInputType.number,
           ),
-          DropdownButtonFormField(
-            isExpanded: true,
-            decoration: InputDecoration(labelText: 'Status'),
-            items: ['ATIVO', 'SUSPENSO'].map((String status) {
-              return DropdownMenuItem(
-                child: Text(status),
-                value: status,
-              );
-            }).toList(),
-            onChanged: (String ) {
-              _statusController.text ;
-            },
-            validator: (value) {
-              if (value == null) return 'Selecione um Status!';
-
-              return null;
-            },
-          ),
         ],
       ),
     );
   }
 
-  void armazenaDadosNoWizard(context) {
-    var state =
-        Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+  void armazenaDadosNoWizard(state) {
     state.nome = _nomeController.text;
     state.cpf = _cpfController.text;
     state.telefone = _telefoneController.text;
     state.email = _emailController.text;
     state.profissao = _profissaoController.text;
-    state.renda = double.parse(_rendaController.text) ;
+    state.renda = double.parse(_rendaController.text);
     state.status = _statusController.text;
   }
 
@@ -293,8 +274,9 @@ class _EnderecoForm extends StatelessWidget {
                 value: estado,
               );
             }).toList(),
-            onChanged: (String) {
-              _estadoController.text ;
+            onChanged: (String? estadoSelecionado) {
+              assert(estadoSelecionado != null);
+              _estadoController.text = estadoSelecionado!;
             },
             validator: (value) {
               if (value == null) return 'Selecione um estado!';
@@ -307,11 +289,10 @@ class _EnderecoForm extends StatelessWidget {
     );
   }
 
-  void armazenaDadosNoWizard(context) {
-    var state =
-        Provider.of<WizardCadastroDeClienteState>(context, listen: false);
+  void armazenaDadosNoWizard(state) {
     state.rua = _ruaController.text;
     state.numero = _numeroController.text;
+    state.complemento = _complementoController.text;
     state.bairro = _bairroController.text;
     state.cidade = _cidadeController.text;
     state.estado = _estadoController.text;

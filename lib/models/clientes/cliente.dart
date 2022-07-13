@@ -9,12 +9,13 @@ class Cliente extends ChangeNotifier{
   String _email;
   String _profissao;
   double _renda;
-  String _status;
   String _rua;
   String _numero;
+  String? _complemento;
   String _bairro;
   String _cidade;
   String _estado;
+
 
 
   int get id => _id;
@@ -31,17 +32,17 @@ class Cliente extends ChangeNotifier{
 
   double get renda => _renda;
 
-  String get status => _status;
 
+  String get estado => _estado;
+
+
+  String? get complemento => _complemento;
 
   set id(int value) {
     _id = value;
   }
 
-  set status(String value) {
-    _status = value;
-    notifyListeners();
-  }
+
 
   set renda(double value) {
     _renda = value;
@@ -73,11 +74,6 @@ class Cliente extends ChangeNotifier{
     notifyListeners();
   }
 
-  String get estado => _estado;
-
-  set estado(String value) {
-    _estado = value;
-  }
 
   String get cidade => _cidade;
 
@@ -104,6 +100,16 @@ class Cliente extends ChangeNotifier{
     _rua = value;
   }
 
+
+  set estado(String value) {
+    _estado = value;
+  }
+
+
+  set complemento(String? value) {
+    _complemento = value;
+  }
+
   Cliente(
       this._id,
       this._nome,
@@ -112,13 +118,13 @@ class Cliente extends ChangeNotifier{
       this._email,
       this._profissao,
       this._renda,
-      this._status,
       this._rua,
       this._numero,
-
+      this._complemento,
       this._bairro,
       this._cidade,
-      this._estado,
+      this._estado
+
 
   );
   Map<String, dynamic> mapJson() {
@@ -127,13 +133,18 @@ class Cliente extends ChangeNotifier{
       'cpf': _cpf,
       'telefone': _telefone,
       'email': _email,
-      'rua': _rua,
-      'numero': _numero,
-      'bairro': _bairro,
-      'cidade': _cidade,
-      'estado': _estado,
+      'status': 'ATIVO',
+      'endereco': {
+        'rua': _rua,
+        'numero': _numero,
+        'complemento': _complemento,
+        'bairro': _bairro,
+        'cidade': _cidade,
+        'estado': _estado,
+      },
       'profissao': _profissao,
       'renda': _renda,
+
     };
   }
 }

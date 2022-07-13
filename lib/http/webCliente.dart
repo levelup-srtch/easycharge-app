@@ -35,9 +35,9 @@ Future<List<Cliente>> buscartodos() async {
       cliente['email'],
       cliente['profissao'],
       cliente['renda'],
-      cliente['status'],
       cliente['endereco']['rua'],
       cliente['endereco']['numero'],
+      cliente['endereco']['complemento'],
       cliente['endereco']['bairro'],
       cliente['endereco']['cidade'],
       cliente['endereco']['estado'],
@@ -48,7 +48,7 @@ Future<List<Cliente>> buscartodos() async {
   return clientes;
 }
 
-Future<Cliente> cadastroCliente(Cliente cliente) async {
+void cadastroCliente(Cliente cliente) async {
   final Client client =
       InterceptedClient.build(interceptors: [LoggingInterceptor()]);
 
@@ -62,19 +62,5 @@ Future<Cliente> cadastroCliente(Cliente cliente) async {
 
   Map<String, dynamic> json = jsonDecode(response.body);
 
-  return Cliente(
-    json['id'],
-    json['nome'],
-    json['cpf'],
-    json['telefone'],
-    json['email'],
-    json['profissao'],
-    json['renda'],
-    json['status'],
-    json['rua'],
-    json['numero'],
-    json['complemento'],
-    json['bairro'],
-    json['cidade'],
-  );
+
 }
