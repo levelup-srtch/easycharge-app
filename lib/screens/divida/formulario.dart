@@ -1,5 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:easycharge/http/divida_webclient.dart';
 import 'package:easycharge/models/divida.dart';
+import 'package:easycharge/screens/divida/listagem.dart';
 import 'package:easycharge/state/listaDividas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ class FormularioDeDivida extends StatelessWidget {
   TextEditingController _valorController = TextEditingController();
   TextEditingController _dataAberturaController = TextEditingController();
   TextEditingController _dataQuitacaoController = TextEditingController();
+  TextEditingController _statusDividaController = TextEditingController();
   TextEditingController _descricaoQuitacaoController = TextEditingController();
   TextEditingController _clienteController = TextEditingController();
 
@@ -112,6 +115,24 @@ class FormularioDeDivida extends StatelessWidget {
                 keyboardType: TextInputType.text,
               ),
             ),
+            // DropdownButtonFormField(
+            //   isExpanded: true,
+            //   decoration: InputDecoration(labelText: 'Status'),
+            //   items: ['ABERTA', 'QUITADA'].map((String status) {
+            //     return DropdownMenuItem(
+            //       child: Text(status),
+            //       value: status,
+            //     );
+            //   }).toList(),
+            //   onChanged: (String ) {
+            //     _statusDividaController.text ;
+            //   },
+            //   validator: (value) {
+            //     if (value == null) return 'Selecione um Status!';
+            //
+            //     return null;
+            //   },
+            // ),
           ]
       ),);
   }
@@ -127,6 +148,7 @@ class FormularioDeDivida extends StatelessWidget {
             String valor = _valorController.text;
             String dataAbertura = _dataAberturaController.text;
             String dataQuitacao = _dataQuitacaoController.text;
+            // String statusDivida = _statusDividaController.text;
             String descricaoQuitacao = _descricaoQuitacaoController.text;
             String cliente = _clienteController.text;
 
@@ -136,7 +158,11 @@ class FormularioDeDivida extends StatelessWidget {
             context, listen: false);
             listaDividas.adicionaDivida(novaDivida);
 
-            Navigator.pop(context);
+            cadastroDivida(novaDivida);
+
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => ListagemDeDividas()),
+                    (route) => false);
             }
           },
       ),

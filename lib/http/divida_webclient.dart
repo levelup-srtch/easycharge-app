@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
+import '../models/divida.dart';
+
 class LoggingInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
@@ -51,18 +53,18 @@ Future<List<DividaJson>> findAllDividas() async {
   return dividas;
 }
 
-// Future<ClienteJson> cadastroCliente(Cliente cliente) async {
-//
-//   final String clienteJson = jsonEncode(cliente.mapJson());
-//
-//   final Response response = await client.post(
-//       Uri.http('10.0.0.157:8080', '/api/clientes'),
-//       headers: {'Content-type': 'application/json'},
-//       body: clienteJson);
-//
-//   Map<String, dynamic> json = jsonDecode(response.body);
-//
-//   debugPrint(response.body);
-//   return ClienteJson(json['id'], json['nome'], json['cpf'], json['email'], json['telefone'],
-//       json['local'], json['renda'], json['status']);
-// }
+Future<DividaJson> cadastroDivida(Divida divida) async {
+
+  final String dividaJson = jsonEncode(divida.mapperJson());
+
+  final Response response = await client.post(
+      Uri.http('10.0.0.157:8080', '/api/dividas'),
+      headers: {'Content-type': 'application/json'},
+      body: dividaJson);
+
+  Map<String, dynamic> json = jsonDecode(response.body);
+
+  debugPrint(response.body);
+  return DividaJson(json['valor'], json['dataAbertura'], json['dataQuitacao'], json['statusDivida'], json['descricaoQuitacao'],
+      json['idCliente']);
+}

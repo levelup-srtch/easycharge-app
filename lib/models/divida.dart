@@ -1,4 +1,5 @@
-import 'package:easycharge/models/cliente.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+
 
 class Divida {
 
@@ -45,5 +46,15 @@ class Divida {
 
   set valor(String value) {
     _valor = value;
+  }
+
+  Map<String, dynamic> mapperJson(){
+    return{
+      'valor' : UtilBrasilFields.converterMoedaParaDouble(_valor),
+      'dataAbertura' : _dataAbertura,
+      'dataQuitacao' : _dataQuitacao,
+      'descricaoQuitacao' : _descricaoQuitacao,
+      'idCliente' : _cliente
+    };
   }
 }
