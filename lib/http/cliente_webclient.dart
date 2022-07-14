@@ -70,3 +70,17 @@ Future<ClienteJson> cadastroCliente(Cliente cliente) async {
   return ClienteJson(json['id'], json['nome'], json['cpf'], json['email'], json['telefone'],
       json['local'], json['renda'], json['status']);
 }
+
+Future<ClienteJson> deleteCliente(int id) async{
+  final Response response = await client.delete(
+      Uri.http('localhost:8080', '/api/clientes'),
+      headers: {'Content-type': 'application/json'});
+
+  debugPrint(response.body);
+
+  if (response.statusCode == 200) {
+    return (json.decode(response.body));
+  } else {
+    throw Exception('Failed to delete album.');
+  }
+}

@@ -58,7 +58,14 @@ class Divida {
     var inputDate = inputFormat.parse(_dataAbertura);
     var outputFormat = DateFormat('yyyy-MM-dd');
     var f = outputFormat.format(inputDate);
-    debugPrint(f);
+
+    if (_dataQuitacao.isNotEmpty){
+      var data = inputFormat.parse(_dataQuitacao);
+      var dataForm = DateFormat('yyyy-MM-dd');
+      var q = dataForm.format(data);
+      _dataQuitacao = q;
+    }
+
     return{
       'valor' : UtilBrasilFields.converterMoedaParaDouble(_valor),
       'dataAbertura' : f,

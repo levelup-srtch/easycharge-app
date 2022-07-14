@@ -88,7 +88,6 @@ class ItemCliente extends StatelessWidget {
             MaterialPageRoute(builder: (context) => FormularioDeCliente())
           );
         },
-
       ),
     );
   }
