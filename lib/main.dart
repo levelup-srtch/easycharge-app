@@ -24,7 +24,7 @@ void main() {
       child: EasychargeApp()
   ));
   // findAll().then((clientes) => debugPrint('Clientes: $clientes'));
-  findAllDividas();
+  // findAllDividas();
 }
 
 class EasychargeApp extends StatelessWidget {

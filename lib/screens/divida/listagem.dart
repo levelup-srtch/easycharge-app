@@ -15,7 +15,7 @@ class ListagemDeDividas extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listagem de clientes'),
+        title: Text('Listagem de dividas'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

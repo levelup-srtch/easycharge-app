@@ -10,19 +10,19 @@ import '../models/divida.dart';
 class LoggingInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
-    debugPrint('Request');
-    debugPrint('url: ${data.url}');
-    debugPrint('headers: ${data.headers}');
-    debugPrint('body: ${data.body}');
+    // debugPrint('Request');
+    // debugPrint('url: ${data.url}');
+    // debugPrint('headers: ${data.headers}');
+    // debugPrint('body: ${data.body}');
     return data;
   }
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    debugPrint('Response');
-    debugPrint('status code: ${data.statusCode}');
-    debugPrint('headers: ${data.headers}');
-    debugPrint('body: ${data.body}');
+    // debugPrint('Response');
+    // debugPrint('status code: ${data.statusCode}');
+    // debugPrint('headers: ${data.headers}');
+    // debugPrint('body: ${data.body}');
     return data;
   }
 }
@@ -33,11 +33,12 @@ final Client client = InterceptedClient.build(
 
 Future<List<DividaJson>> findAllDividas() async {
   final Response response =
-  await client.get(Uri.http('10.0.0.157:8080', '/api/dividas')).timeout(Duration(seconds: 5));
+  await client.get(Uri.http('localhost:8080', '/api/dividas')).timeout(Duration(seconds: 5));
   // await client.get(Uri.parse('http://10.0.2.2:8080/api/clientes'));
   // ignore: prefer_interpolation_to_compose_strings
   final List<dynamic> decodedJson = jsonDecode('[' + response.body + ']')[0]['content'];
   final List<DividaJson> dividas = [];
+
   for (Map<String, dynamic> dividaJson in decodedJson) {
     final DividaJson json = DividaJson(
       dividaJson['valor'],
@@ -58,7 +59,7 @@ Future<DividaJson> cadastroDivida(Divida divida) async {
   final String dividaJson = jsonEncode(divida.mapperJson());
 
   final Response response = await client.post(
-      Uri.http('10.0.0.157:8080', '/api/dividas'),
+      Uri.http('localhost:8080', '/api/dividas'),
       headers: {'Content-type': 'application/json'},
       body: dividaJson);
 

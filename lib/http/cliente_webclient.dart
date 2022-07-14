@@ -33,7 +33,7 @@ final Client client = InterceptedClient.build(
 
 Future<List<ClienteJson>> findAll() async {
   final Response response =
-  await client.get(Uri.http('10.0.0.157:8080', '/api/clientes')).timeout(Duration(seconds: 5));
+  await client.get(Uri.http('localhost:8080', '/api/clientes')).timeout(Duration(seconds: 5));
   // await client.get(Uri.parse('http://10.0.2.2:8080/api/clientes'));
   // ignore: prefer_interpolation_to_compose_strings
   final List<dynamic> decodedJson = jsonDecode('[' + response.body + ']')[0]['content'];
@@ -60,7 +60,7 @@ Future<ClienteJson> cadastroCliente(Cliente cliente) async {
   final String clienteJson = jsonEncode(cliente.mapJson());
 
   final Response response = await client.post(
-      Uri.http('10.0.0.157:8080', '/api/clientes'),
+      Uri.http('localhost:8080', '/api/clientes'),
       headers: {'Content-type': 'application/json'},
       body: clienteJson);
 

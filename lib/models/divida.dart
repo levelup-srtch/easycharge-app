@@ -1,4 +1,8 @@
+
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:date_format/date_format.dart';
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 
 class Divida {
@@ -36,6 +40,7 @@ class Divida {
     _dataQuitacao = value;
   }
 
+
   String get dataAbertura => _dataAbertura;
 
   set dataAbertura(String value) {
@@ -49,9 +54,14 @@ class Divida {
   }
 
   Map<String, dynamic> mapperJson(){
+    var inputFormat = DateFormat('dd/MM/yyyy');
+    var inputDate = inputFormat.parse(_dataAbertura);
+    var outputFormat = DateFormat('yyyy-MM-dd');
+    var f = outputFormat.format(inputDate);
+    debugPrint(f);
     return{
       'valor' : UtilBrasilFields.converterMoedaParaDouble(_valor),
-      'dataAbertura' : _dataAbertura,
+      'dataAbertura' : f,
       'dataQuitacao' : _dataQuitacao,
       'descricaoQuitacao' : _descricaoQuitacao,
       'idCliente' : _cliente

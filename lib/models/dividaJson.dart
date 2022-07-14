@@ -2,7 +2,7 @@ class DividaJson {
 
   double _valor;
   String _dataAbertura;
-  String _dataQuitacao;
+  String? _dataQuitacao;
   late String _statusDivida;
   String _descricaoQuitacao;
   int _cliente;
@@ -28,11 +28,12 @@ class DividaJson {
     _statusDivida = value;
   }
 
-  String get dataQuitacao => _dataQuitacao;
+  String? get dataQuitacao => _dataQuitacao;
 
-  set dataQuitacao(String value) {
+  set dataQuitacao(String? value) {
     _dataQuitacao = value;
   }
+
 
   String get dataAbertura => _dataAbertura;
 
