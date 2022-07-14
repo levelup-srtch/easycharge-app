@@ -73,7 +73,7 @@ Future<ClienteJson> cadastroCliente(Cliente cliente) async {
 
 Future<ClienteJson> deleteCliente(int id) async{
   final Response response = await client.delete(
-      Uri.http('localhost:8080', '/api/clientes'),
+      Uri.http('localhost:8080', '/api/clientes/$id'),
       headers: {'Content-type': 'application/json'});
 
   debugPrint(response.body);

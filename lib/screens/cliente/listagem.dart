@@ -32,7 +32,7 @@ class ListagemDeClientes extends StatelessWidget {
             case ConnectionState.active:
               break;
             case ConnectionState.done:
-              if(snapshot.hasData){
+              if (snapshot.hasData) {
                 final List<ClienteJson> clientes = snapshot.requireData;
                 if (clientes.isNotEmpty) {
                   return Padding(
@@ -44,12 +44,15 @@ class ListagemDeClientes extends StatelessWidget {
                         return ItemCliente(clientes[indice]);
                       },
                       separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
+                          const Divider(),
                     ),
                   );
                 }
               }
-              return MessageCenter('Nenhum cliente foi encontrado!', icon: Icons.warning,);
+              return MessageCenter(
+                'Nenhum cliente foi encontrado!',
+                icon: Icons.warning,
+              );
           }
           return MessageCenter('Erro desconhecido!');
         },
@@ -70,7 +73,6 @@ class ListagemDeClientes extends StatelessWidget {
   }
 }
 
-
 class ItemCliente extends StatelessWidget {
   final ClienteJson _cliente;
 
@@ -83,13 +85,58 @@ class ItemCliente extends StatelessWidget {
         leading: const Icon(Icons.person_outlined),
         title: Text(_cliente.nome),
         subtitle: Text('CPF: ' + _cliente.cpf),
-        onTap: (){
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => FormularioDeCliente())
-          );
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (builder) {
+                return AlertDialog(
+                  title: Text(_cliente.nome),
+                  content: SingleChildScrollView(
+                      child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Text('CPF: ${_cliente.cpf}'),
+                          Text('Telefone: ${_cliente.telefone}'),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          Text('Local: ${_cliente.local}'),
+                        ],
+                      )
+                    ],
+                  )),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Sair'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: const Text('Excluir contato'),
+                      onPressed: () {
+                        deleteCliente(_cliente.id);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ListagemDeClientes()));
+                      },
+                    )
+                  ],
+                );
+              });
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(builder: (context) => FormularioDeCliente())
+          // );
         },
       ),
     );
   }
 }
-
